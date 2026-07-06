@@ -8,6 +8,7 @@ export interface Recipe {
   servings: number;
   difficulty?: "Easy" | "Medium" | "Hard";
   spiceFactor: "None" | "Mild" | "Medium" | "Hot" | "Satisfactory";
+  flavor: string;
   category: string;
   rating: number;
   ingredients: {

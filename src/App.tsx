@@ -1540,34 +1540,6 @@ export default function App() {
                   {hoveredRecipe.description}
                 </p>
 
-                {/* Micro indicators */}
-                <div className="grid grid-cols-3 gap-2 border-y-2 border-brand-border/60 py-3 mt-4 text-center">
-                  <div>
-                    <span className="block text-xs font-extrabold text-brand-dark">
-                      {hoveredRecipe.prepTime + hoveredRecipe.cookTime}m
-                    </span>
-                    <span className="text-[9px] text-brand-dark/40 font-black uppercase font-mono tracking-wider">
-                      Cook Time
-                    </span>
-                  </div>
-                  <div className="border-x-2 border-brand-border/60">
-                    <span className="block text-xs font-extrabold text-brand-dark">
-                      {hoveredRecipe.ingredients.length}
-                    </span>
-                    <span className="text-[9px] text-brand-dark/40 font-black uppercase font-mono tracking-wider">
-                      Ingredients
-                    </span>
-                  </div>
-                  <div>
-                    <span className="block text-xs font-extrabold text-brand-dark">
-                      {hoveredRecipe.spiceFactor === "None" ? "Mild 🍃" : hoveredRecipe.spiceFactor === "Mild" ? "Mild 🌶️" : hoveredRecipe.spiceFactor === "Medium" ? "Medium 🌶️🌶️" : hoveredRecipe.spiceFactor === "Satisfactory" ? "Satisfy 🌶️🌶️🌶️" : "Hot 🌶️🌶️🌶️🌶️"}
-                    </span>
-                    <span className="text-[9px] text-brand-dark/40 font-black uppercase font-mono tracking-wider">
-                      Spice
-                    </span>
-                  </div>
-                </div>
-
                 {/* High-Contrast Tags */}
                 <div className="flex flex-wrap gap-1.5 pt-2">
                   {hoveredRecipe.tags.slice(0, 4).map((tag, idx) => (

@@ -13,6 +13,75 @@ interface RecipeCardProps {
   onHoverEnd?: () => void;
 }
 
+const scaleAmount = (amountStr: string, originalServings: number, targetServings: number): string => {
+  if (originalServings === targetServings) return amountStr;
+  const ratio = targetServings / originalServings;
+  
+  const match = amountStr.match(/^(\d+[\d\/\.\s\-]*)\s*(.*)$/);
+  if (!match) return amountStr;
+  
+  const numPart = match[1].trim();
+  const unitPart = match[2] ? match[2].trim() : "";
+  
+  const parseFraction = (str: string): number => {
+    if (str.includes('/')) {
+      const parts = str.split('/');
+      return parseFloat(parts[0]) / parseFloat(parts[1]);
+    }
+    return parseFloat(str);
+  };
+  
+  function formatValue(val: number): string {
+    if (Math.abs(val - Math.round(val)) < 0.01) return Math.round(val).toString();
+    const fracs = [
+      { d: 2, s: "1/2" },
+      { d: 3, s: "1/3" },
+      { d: 4, s: "1/4" },
+      { d: 4, s: "3/4" },
+      { d: 8, s: "1/8" },
+      { d: 3, s: "2/3" },
+    ];
+    const decimal = val - Math.floor(val);
+    if (decimal > 0.01) {
+      for (const f of fracs) {
+        if (Math.abs(decimal - (1 / f.d)) < 0.05) {
+          const whole = Math.floor(val);
+          return (whole > 0 ? `${whole} ` : "") + f.s;
+        }
+        if (Math.abs(decimal - (2 / f.d)) < 0.05 && f.d === 3) {
+          const whole = Math.floor(val);
+          return (whole > 0 ? `${whole} ` : "") + "2/3";
+        }
+        if (Math.abs(decimal - (3 / f.d)) < 0.05 && f.d === 4) {
+          const whole = Math.floor(val);
+          return (whole > 0 ? `${whole} ` : "") + "3/4";
+        }
+      }
+    }
+    return val.toFixed(1).replace(/\.0$/, "");
+  }
+
+  let value = 0;
+  if (numPart.includes(' ')) {
+    const parts = numPart.split(/\s+/);
+    value = parts.reduce((acc, p) => acc + parseFraction(p), 0);
+  } else if (numPart.includes('-')) {
+    const parts = numPart.split('-');
+    const scaledParts = parts.map(p => {
+      const parsed = parseFraction(p);
+      return isNaN(parsed) ? p : formatValue(parsed * ratio);
+    });
+    return `${scaledParts.join('-')} ${unitPart}`.trim();
+  } else {
+    value = parseFraction(numPart);
+  }
+  
+  if (isNaN(value)) return amountStr;
+  
+  const newValue = value * ratio;
+  return `${formatValue(newValue)} ${unitPart}`.trim();
+};
+
 export default function RecipeCard({ 
   recipe, 
   onAddToPlanner, 
@@ -27,6 +96,8 @@ export default function RecipeCard({
   const [showAddMenu, setShowAddMenu] = useState(false);
   const [selectedDay, setSelectedDay] = useState("Monday");
   const [selectedPeriod, setSelectedPeriod] = useState<MealPeriod>("dinner");
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [currentServings, setCurrentServings] = useState<number>(Math.min(recipe.servings, 4));
 
   const isPR = weatherMode === "caribbean-sun";
 
@@ -120,29 +191,40 @@ export default function RecipeCard({
             <h3 className="text-xs sm:text-lg font-black text-brand-dark leading-snug group-hover:text-brand-orange transition-colors line-clamp-1">
               {recipe.title}
             </h3>
-            <p className="text-[10px] sm:text-xs text-brand-dark/60 mt-1 sm:mt-1.5 line-clamp-2 leading-relaxed font-medium">
-              {recipe.description}
-            </p>
+            <div 
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowFullDescription(!showFullDescription);
+              }}
+              className="mt-1 sm:mt-1.5 cursor-pointer hover:bg-brand-orange/5 p-1 -m-1 rounded-md transition-all duration-200 group/desc"
+              title="Click to toggle full description"
+            >
+              <p className={`text-[10px] sm:text-xs text-brand-dark/60 leading-relaxed font-medium transition-all ${
+                showFullDescription ? "" : "line-clamp-2"
+              }`}>
+                {recipe.description}
+              </p>
+              <span className="text-[8px] sm:text-[9px] text-brand-orange font-bold hover:underline block mt-0.5 font-mono">
+                {showFullDescription ? "▲ Show less" : "▼ Tap to read full description"}
+              </span>
+            </div>
           </div>
 
           {/* Quick Metrics */}
-          <div className="grid grid-cols-3 gap-0.5 sm:gap-2 border-t-2 border-brand-border pt-2 sm:pt-4 mt-2 sm:mt-4 text-center">
-            <div className="flex flex-col items-center">
-              <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-brand-dark/40 mb-0.5" />
-              <span className="text-[9px] sm:text-[11px] font-bold text-brand-dark">{recipe.prepTime + recipe.cookTime}m</span>
-              <span className="text-[7px] sm:text-[9px] text-brand-dark/40 uppercase font-mono tracking-wider sm:tracking-widest font-black">Total</span>
-            </div>
-            <div className="flex flex-col items-center border-x-2 border-brand-border">
+          <div className="grid grid-cols-2 gap-2 border-t-2 border-brand-border pt-2 sm:pt-4 mt-2 sm:mt-4 text-center">
+            <div className="flex flex-col items-center border-r-2 border-brand-border">
               <Users className="w-3 h-3 sm:w-4 sm:h-4 text-brand-dark/40 mb-0.5" />
-              <span className="text-[9px] sm:text-[11px] font-bold text-brand-dark">{recipe.servings} serving</span>
-              <span className="text-[7px] sm:text-[9px] text-brand-dark/40 uppercase font-mono tracking-wider sm:tracking-widest font-black">Size</span>
+              <span className="text-[9px] sm:text-[11px] font-bold text-brand-dark">
+                {Math.min(recipe.servings, 4)} people
+              </span>
+              <span className="text-[7px] sm:text-[9px] text-brand-dark/40 uppercase font-mono tracking-wider sm:tracking-widest font-black">Servings</span>
             </div>
             <div className="flex flex-col items-center">
-              <Flame className="w-3 h-3 sm:w-4 sm:h-4 text-brand-dark/40 mb-0.5" />
-              <span className="text-[9px] sm:text-[11px] font-bold text-brand-dark truncate max-w-full">
-                {recipe.spiceFactor === "None" ? "Mild 🍃" : recipe.spiceFactor === "Mild" ? "Mild 🌶️" : recipe.spiceFactor === "Medium" ? "Med 🌶️" : recipe.spiceFactor === "Satisfactory" ? "Satis 🌶️" : "Hot 🌶️"}
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-brand-orange/60 mb-0.5" />
+              <span className="text-[9px] sm:text-[11px] font-bold text-brand-dark truncate max-w-full" title={recipe.flavor}>
+                {recipe.flavor}
               </span>
-              <span className="text-[7px] sm:text-[9px] text-brand-dark/40 uppercase font-mono tracking-wider sm:tracking-widest font-black">Spice</span>
+              <span className="text-[7px] sm:text-[9px] text-brand-dark/40 uppercase font-mono tracking-wider sm:tracking-widest font-black">Flavor</span>
             </div>
           </div>
         </div>
@@ -253,7 +335,9 @@ export default function RecipeCard({
                                   {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                                 </div>
                                 <div className="text-sm">
-                                  <span className="font-bold">{ing.amount}</span>{" "}
+                                  <span className="font-bold">
+                                    {scaleAmount(ing.amount, recipe.servings, currentServings)}
+                                  </span>{" "}
                                   <span className="font-medium">{ing.name}</span>
                                   {ing.category && (
                                     <span className="block text-[9px] text-brand-dark/40 font-mono tracking-widest mt-0.5 uppercase font-bold">
@@ -321,26 +405,39 @@ export default function RecipeCard({
                       >
                         <h4 className="text-xs font-black text-brand-dark/40 uppercase font-mono tracking-widest mb-4">Showcase Summary</h4>
                         <div className="space-y-3.5">
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between items-center text-sm">
                             <span className="text-brand-dark/50 font-bold">Prep Time</span>
                             <span className="font-black text-brand-dark">{recipe.prepTime} mins</span>
                           </div>
-                          <div className="flex justify-between text-sm">
+                          <div className="flex justify-between items-center text-sm">
                             <span className="text-brand-dark/50 font-bold">Cook Time</span>
                             <span className="font-black text-brand-dark">{recipe.cookTime} mins</span>
                           </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-brand-dark/50 font-bold">Total Time</span>
-                            <span className="font-black text-brand-dark">{recipe.prepTime + recipe.cookTime} mins</span>
+                          <div className="flex justify-between items-center text-sm">
+                            <div className="flex flex-col">
+                              <span className="text-brand-dark/50 font-bold">Servings</span>
+                              <span className="text-[9px] text-brand-dark/30 italic">(Max 4 people)</span>
+                            </div>
+                            <div className="flex gap-1">
+                              {[1, 2, 3, 4].map((s) => (
+                                <button
+                                  key={s}
+                                  onClick={() => setCurrentServings(s)}
+                                  className={`w-6 h-6 rounded-full text-[10px] font-black border flex items-center justify-center transition-all cursor-pointer ${
+                                    currentServings === s
+                                      ? "bg-brand-orange border-brand-orange text-white"
+                                      : "bg-white border-brand-border text-brand-dark hover:bg-brand-orange/5"
+                                  }`}
+                                >
+                                  {s}
+                                </button>
+                              ))}
+                            </div>
                           </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-brand-dark/50 font-bold">Servings</span>
-                            <span className="font-black text-brand-dark">{recipe.servings} people</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-brand-dark/50 font-bold">Spice Factor</span>
-                            <span className="font-black text-brand-dark">
-                              {recipe.spiceFactor === "None" ? "Mild 🍃" : recipe.spiceFactor === "Mild" ? "Mild 🌶️" : recipe.spiceFactor === "Medium" ? "Medium 🌶️🌶️" : recipe.spiceFactor === "Satisfactory" ? "Satisfactory 🌶️🌶️🌶️" : "Hot 🌶️🌶️🌶️🌶️"}
+                          <div className="flex justify-between items-center text-sm">
+                            <span className="text-brand-dark/50 font-bold">Flavor</span>
+                            <span className="font-black text-brand-dark text-right text-xs max-w-[150px] truncate" title={recipe.flavor}>
+                              {recipe.flavor}
                             </span>
                           </div>
                         </div>

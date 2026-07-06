@@ -23,7 +23,7 @@ export default function Hero({
   isShaking = false,
   weatherMode = "caribbean-sun",
 }: HeroProps) {
-  const categories = ["All", "Mains", "Salads", "Desserts"];
+  const categories = ["All", "Mains", "Salads", "Desserts", "Drinks", "Appetizers"];
 
   const isPR = weatherMode === "caribbean-sun";
 
