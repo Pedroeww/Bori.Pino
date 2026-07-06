@@ -1,6 +1,6 @@
 import { useState, useEffect, FormEvent, MouseEvent } from "react";
 import { ChefHat, BookOpen, Heart, Mail, Phone, Clock, MapPin, Check, Sun, CloudRain, Sparkles, Star, RotateCw, UploadCloud, X, FileImage, FileVideo } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import Hero from "./components/Hero";
 import RecipeCard from "./components/RecipeCard";
 import { CURATED_RECIPES } from "./data/recipes";
@@ -58,6 +58,31 @@ const IMAGE_COMMENTS = [
 ];
 
 export default function App() {
+  const [isIntroLoading, setIsIntroLoading] = useState(true);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+
+  const PHRASES = [
+    "Heating up the stovetop... 🔥",
+    "Marinating Lechon & Pork Adobo... 🍖",
+    "Simmering Coconut Milk & Calamansi... 🥥",
+    "Stamping with Quality Seal! 🏅"
+  ];
+
+  useEffect(() => {
+    const phraseInterval = setInterval(() => {
+      setPhraseIndex((prev) => (prev < 3 ? prev + 1 : prev));
+    }, 1000);
+
+    const timer = setTimeout(() => {
+      setIsIntroLoading(false);
+    }, 4000);
+
+    return () => {
+      clearInterval(phraseInterval);
+      clearTimeout(timer);
+    };
+  }, []);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [scrollOpacity, setScrollOpacity] = useState(0.3);
@@ -364,7 +389,109 @@ export default function App() {
   };
 
   return (
-    <div id="gourmet-app-container" className="min-h-screen bg-brand-cream text-brand-dark flex flex-col antialiased relative">
+    <AnimatePresence mode="wait">
+      {isIntroLoading ? (
+        <motion.div
+          key="intro-loader"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, scale: 0.96, filter: "blur(10px)", transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }}
+          className="fixed inset-0 z-[99999] bg-brand-cream flex flex-col items-center justify-center p-6 select-none overflow-hidden"
+        >
+          {/* Visual content for BoriPino Loader */}
+          <div className="relative flex flex-col items-center max-w-sm w-full text-center space-y-8">
+            {/* Rotating Chef Hat with colored circular backgrounds */}
+            <div className="relative w-28 h-28 flex items-center justify-center">
+              {/* Pulsing ring background combining red and blue */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.15, 1],
+                  rotate: [0, 180, 360],
+                  borderColor: ["#C8102E", "#0038A8", "#C8102E"]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute inset-0 rounded-full border-4 border-dashed"
+              />
+              
+              {/* Outer spinning ring */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-4 rounded-full border-2 border-brand-border border-t-brand-orange border-b-brand-teal opacity-60"
+              />
+
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="z-10 bg-white border-2 border-brand-border p-5 rounded-full shadow-lg"
+              >
+                <ChefHat className="w-12 h-12 text-brand-orange animate-pulse" />
+              </motion.div>
+            </div>
+
+            {/* Title brand typography */}
+            <div className="space-y-2">
+              <motion.h1
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-4xl font-black text-brand-dark tracking-tighter uppercase font-sans"
+              >
+                BoriPino
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.6 }}
+                transition={{ delay: 0.4 }}
+                className="text-[10px] font-black tracking-widest text-brand-dark/40 uppercase font-mono"
+              >
+                Sabores Boricua × Lasang Pinoy
+              </motion.p>
+            </div>
+
+            {/* Phrases rotating inside a clean container */}
+            <div className="relative w-full h-8 flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={phraseIndex}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.25 }}
+                  className="text-xs sm:text-sm font-mono font-bold text-brand-orange tracking-wider uppercase h-6 flex items-center justify-center text-center"
+                >
+                  {PHRASES[phraseIndex]}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            {/* Dynamic width progress bar stretching over 4 seconds */}
+            <div className="w-48 bg-brand-border/60 h-1.5 rounded-full overflow-hidden border border-brand-border">
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 4.0, ease: "linear" }}
+                className="h-full bg-gradient-to-r from-brand-orange to-brand-teal rounded-full"
+              />
+            </div>
+
+            {/* Minimal countdown number indicator */}
+            <div className="text-[10px] font-mono font-bold text-brand-dark/30 tracking-widest uppercase">
+              Starting in {Math.max(1, 4 - phraseIndex)}s...
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <div id="gourmet-app-container" className="min-h-screen bg-brand-cream text-brand-dark flex flex-col antialiased relative">
       {/* Global custom tracking cursor follower with transparent background */}
       {isMouseOnWindow && (
         <motion.div
@@ -1464,8 +1591,8 @@ export default function App() {
       {/* Semi-Full Screen Hover Preview Overlay Portal */}
       {hoveredRecipe && (
         <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-8 pointer-events-none">
-          {/* Blur Glass backdrop overlay */}
-          <div className="fixed inset-0 bg-brand-dark/20 backdrop-blur-md transition-opacity duration-300" />
+          {/* Glass backdrop overlay */}
+          <div className="fixed inset-0 bg-brand-dark/20 transition-opacity duration-300" />
 
           {/* Actual Popout Content */}
           <motion.div
@@ -1554,5 +1681,7 @@ export default function App() {
         </div>
       )}
     </div>
+  )}
+</AnimatePresence>
   );
 }
