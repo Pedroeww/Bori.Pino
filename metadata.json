@@ -1,0 +1,6 @@
+{
+  "name": "BoriPino - SABOS BORICUA x LASANG PINOY",
+  "description": "A visually stunning gourmet food website with curated chef recipes, a weekly meal planner with automated shopping list, and an AI-powered smart recipe creator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

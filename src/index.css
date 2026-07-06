@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-brand-orange: #C8102E; /* Authentic Puerto Rican & Philippine flag Crimson Red */
+  --color-brand-teal: #0038A8;   /* Brilliant Philippine & Puerto Rican Royal Blue */
+  --color-brand-cream: #FFFDF8;  /* Pristine warm soft background cream */
+  --color-brand-dark: #0F172A;   /* Rich navy-slate charcoal for high contrast readability */
+  --color-brand-border: #EAE3D2; /* Soft warm sand gold border */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-3px, 2px) rotate(-1deg); }
+  20% { transform: translate(3px, -1px) rotate(1deg); }
+  30% { transform: translate(-2px, -2px) rotate(0deg); }
+  40% { transform: translate(2px, 1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(1px, -1px) rotate(0deg); }
+  70% { transform: translate(-2px, 1px) rotate(1deg); }
+  80% { transform: translate(2px, -1px) rotate(-1deg); }
+  90% { transform: translate(-1px, 1px) rotate(0deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-shake {
+  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Shining Text and Border Animations */
+@keyframes textShinePR {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-textShinePR {
+  background: linear-gradient(
+    90deg,
+    #C8102E 0%,
+    #FFB81C 25%,
+    #D22630 50%,
+    #FFD700 75%,
+    #C8102E 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: textShinePR 4s linear infinite;
+}
+
+@keyframes textShinePH {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-textShinePH {
+  background: linear-gradient(
+    90deg,
+    #0038A8 0%,
+    #059669 25%,
+    #1E40AF 50%,
+    #10B981 75%,
+    #0038A8 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: textShinePH 4s linear infinite;
+}
+
+@keyframes borderGlowPR {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(200, 16, 46, 0.25), inset 0 0 4px rgba(255, 184, 28, 0.1);
+    border-color: rgba(200, 16, 46, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(200, 16, 46, 0.6), inset 0 0 8px rgba(255, 184, 28, 0.2);
+    border-color: rgba(255, 184, 28, 0.8);
+  }
+}
+.animate-borderGlowPR {
+  animation: borderGlowPR 4s ease-in-out infinite;
+}
+
+@keyframes borderGlowPH {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(0, 56, 168, 0.25), inset 0 0 4px rgba(16, 185, 129, 0.1);
+    border-color: rgba(0, 56, 168, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(0, 56, 168, 0.6), inset 0 0 8px rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.8);
+  }
+}
+.animate-borderGlowPH {
+  animation: borderGlowPH 4s ease-in-out infinite;
+}
+
+/* Rain weather animation */
+@keyframes fall {
+  0% {
+    transform: translateY(-150px) rotate(12deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(110vh) rotate(12deg);
+    opacity: 0;
+  }
+}
+.rain-drop {
+  position: absolute;
+  background: linear-gradient(transparent, rgba(0, 56, 168, 0.6) 40%, rgba(14, 165, 233, 0.9));
+  width: 2.5px;
+  height: 90px;
+  opacity: 0;
+  pointer-events: none;
+  animation: fall 1.5s linear infinite;
+  filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.5));
+}
+
+/* Warm sun pulse animation */
+@keyframes sunpulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.15) rotate(180deg);
+    opacity: 0.35;
+  }
+}
+.animate-sunpulse {
+  animation: sunpulse 25s linear infinite;
+}
+
+/* Custom hide scrollbar utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
