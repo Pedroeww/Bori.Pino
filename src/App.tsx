@@ -1549,16 +1549,6 @@ export default function App() {
                   ))}
                 </div>
               </div>
-
-              {/* Pulsing trigger instruction at the bottom */}
-              <div className="pt-3 border-t border-brand-border/40 flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full animate-ping ${
-                  weatherMode === "caribbean-sun" ? "bg-brand-orange" : "bg-[#0038A8]"
-                }`} />
-                <span className="text-[9px] sm:text-[10px] font-black tracking-wider text-brand-dark/50 uppercase">
-                  Click food card to open complete recipe checklist!
-                </span>
-              </div>
             </div>
           </motion.div>
         </div>

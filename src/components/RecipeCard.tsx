@@ -253,7 +253,7 @@ export default function RecipeCard({
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{ scale: 0.9, y: 30, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 180, damping: 18 }}
-                className="inline-block align-bottom bg-brand-cream rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full border-2 border-brand-border max-h-[90vh] flex flex-col"
+                className="inline-block align-bottom bg-brand-cream rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border-2 border-brand-border max-h-[90vh] flex flex-col"
               >
                 {/* Header Visual with Close Button */}
                 <div className="relative h-64 sm:h-80 w-full flex-shrink-0">
@@ -290,298 +290,124 @@ export default function RecipeCard({
                     <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tighter drop-shadow-xs uppercase">
                       {recipe.title}
                     </h2>
-                    <p className="text-white/80 text-sm sm:text-base mt-2 max-w-2xl font-medium drop-shadow-xs leading-relaxed">
-                      {recipe.description}
-                    </p>
                   </div>
                 </div>
 
                 {/* Scrollable content section */}
                 <div className="overflow-y-auto p-6 sm:p-8 flex-grow">
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-                    {/* Left Column (8 cols): Ingredients & Instructions */}
-                    <div className="md:col-span-8 space-y-8">
-                      {/* Ingredients with interactive checklist */}
-                      <div>
-                        <div className="flex items-center justify-between border-b-2 border-brand-border pb-3 mb-4">
-                          <h3 className="text-lg font-black text-brand-dark flex items-center gap-2">
-                            <ChefHat className="w-5 h-5 text-brand-orange" />
-                            <span>Ingredients Checklist</span>
-                          </h3>
-                          <span className="text-xs text-brand-dark/40 font-mono font-bold">
-                            {Object.values(checkedIngredients).filter(Boolean).length} / {recipe.ingredients.length} checked
-                          </span>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          {recipe.ingredients.map((ing, idx) => {
-                            const isChecked = !!checkedIngredients[idx];
-                            return (
-                              <motion.div
-                                key={idx}
-                                id={`ing-item-${idx}`}
-                                onClick={() => toggleIngredient(idx)}
-                                whileHover={{ x: 4, scale: 1.01 }}
-                                whileTap={{ scale: 0.99 }}
-                                className={`flex items-start gap-3 p-3 rounded-xl border-2 transition-all cursor-pointer select-none ${
-                                  isChecked
-                                    ? "bg-brand-border/20 border-brand-border opacity-60 line-through text-brand-dark/40"
-                                    : "bg-white border-brand-border hover:bg-brand-orange/5 hover:border-brand-orange/40 text-brand-dark"
-                                }`}
-                              >
-                                <div className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                                  isChecked ? "bg-brand-orange border-brand-orange text-white" : "border-brand-orange/50 bg-white"
-                                }`}>
-                                  {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                                </div>
-                                <div className="text-sm">
-                                  <span className="font-bold">
-                                    {scaleAmount(ing.amount, recipe.servings, currentServings)}
-                                  </span>{" "}
-                                  <span className="font-medium">{ing.name}</span>
-                                  {ing.category && (
-                                    <span className="block text-[9px] text-brand-dark/40 font-mono tracking-widest mt-0.5 uppercase font-bold">
-                                      {ing.category}
-                                    </span>
-                                  )}
-                                </div>
-                              </motion.div>
-                            );
-                          })}
-                        </div>
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-sm font-black text-brand-dark/40 uppercase font-mono tracking-widest mb-3">About this meal</h3>
+                      <p className="text-brand-dark/80 text-sm sm:text-base leading-relaxed font-medium">
+                        {recipe.description}
+                      </p>
+                    </div>
+
+                    {/* Metadata summary */}
+                    <div className="grid grid-cols-2 gap-4 border-t-2 border-b-2 border-brand-border py-4 my-6">
+                      <div className="flex flex-col items-center justify-center p-3 bg-white rounded-xl border-2 border-brand-border">
+                        <span className="text-[10px] text-brand-dark/40 font-mono font-black uppercase tracking-wider mb-1">Servings</span>
+                        <span className="text-xs sm:text-sm font-black text-brand-dark">{Math.min(recipe.servings, 4)} people</span>
                       </div>
-
-                      {/* Step-by-Step Instructions with checklist */}
-                      <div>
-                        <div className="flex items-center justify-between border-b-2 border-brand-border pb-3 mb-4">
-                          <h3 className="text-lg font-black text-brand-dark flex items-center gap-2">
-                            <Plus className="w-5 h-5 text-brand-orange rotate-45" />
-                            <span>Step-by-Step Directions</span>
-                          </h3>
-                          <span className="text-xs text-brand-dark/40 font-mono font-bold">
-                            {Object.values(completedSteps).filter(Boolean).length} / {recipe.instructions.length} done
-                          </span>
-                        </div>
-
-                        <div className="space-y-4">
-                          {recipe.instructions.map((step, idx) => {
-                            const isDone = !!completedSteps[idx];
-                            return (
-                              <motion.div
-                                key={idx}
-                                id={`step-item-${idx}`}
-                                onClick={() => toggleStep(idx)}
-                                whileHover={{ scale: 1.01 }}
-                                whileTap={{ scale: 0.99 }}
-                                className={`flex gap-4 p-4 rounded-xl border-2 transition-all cursor-pointer ${
-                                  isDone
-                                    ? "bg-brand-border/20 border-brand-border text-brand-dark/40"
-                                    : "bg-white border-brand-border hover:border-brand-orange/30 text-brand-dark"
-                                }`}
-                              >
-                                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-mono font-bold text-xs border transition-all ${
-                                  isDone
-                                    ? "bg-brand-border border-brand-border text-brand-dark/40"
-                                    : "bg-brand-orange/10 border-brand-orange/20 text-brand-orange"
-                                }`}>
-                                  {isDone ? <Check className="w-4 h-4 stroke-[3]" /> : idx + 1}
-                                </div>
-                                <p className={`text-sm leading-relaxed font-medium ${isDone ? "line-through text-brand-dark/40" : ""}`}>
-                                  {step}
-                                </p>
-                              </motion.div>
-                            );
-                          })}
-                        </div>
+                      <div className="flex flex-col items-center justify-center p-3 bg-white rounded-xl border-2 border-brand-border">
+                        <span className="text-[10px] text-brand-dark/40 font-mono font-black uppercase tracking-wider mb-1">Flavor Profile</span>
+                        <span className="text-xs sm:text-sm font-black text-brand-dark text-center truncate max-w-full" title={recipe.flavor}>
+                          {recipe.flavor}
+                        </span>
                       </div>
                     </div>
 
-                    {/* Right Column (4 cols): Nutrition, Meta & Quick Planner Add */}
-                    <div className="md:col-span-4 space-y-6">
-                      {/* Quick Metrics Grid */}
-                      <motion.div 
-                        whileHover={{ scale: 1.01 }}
-                        className="bg-brand-border/20 border-2 border-brand-border rounded-2xl p-5"
-                      >
-                        <h4 className="text-xs font-black text-brand-dark/40 uppercase font-mono tracking-widest mb-4">Showcase Summary</h4>
-                        <div className="space-y-3.5">
-                          <div className="flex justify-between items-center text-sm">
-                            <span className="text-brand-dark/50 font-bold">Prep Time</span>
-                            <span className="font-black text-brand-dark">{recipe.prepTime} mins</span>
-                          </div>
-                          <div className="flex justify-between items-center text-sm">
-                            <span className="text-brand-dark/50 font-bold">Cook Time</span>
-                            <span className="font-black text-brand-dark">{recipe.cookTime} mins</span>
-                          </div>
-                          <div className="flex justify-between items-center text-sm">
-                            <div className="flex flex-col">
-                              <span className="text-brand-dark/50 font-bold">Servings</span>
-                              <span className="text-[9px] text-brand-dark/30 italic">(Max 4 people)</span>
+                    {recipe.chefTip && (
+                      <div className="bg-brand-orange/5 border-2 border-brand-border rounded-2xl p-5">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-base">💡</span>
+                          <h4 className="text-xs font-black text-brand-orange uppercase font-mono tracking-widest">Chef's Secret Tip</h4>
+                        </div>
+                        <p className="text-xs sm:text-sm text-brand-dark/80 italic leading-relaxed font-semibold">
+                          "{recipe.chefTip}"
+                        </p>
+                      </div>
+                    )}
+
+                    {showPlannerQuickAdd && onAddToPlanner && (
+                      <div className="border-2 border-brand-border rounded-2xl p-4 bg-white shadow-xs">
+                        {!showAddMenu ? (
+                          <motion.button
+                            id="add-to-planner-btn"
+                            onClick={() => setShowAddMenu(true)}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full py-3 px-4 bg-brand-orange hover:bg-brand-orange/95 text-white font-black rounded-full text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-brand-orange/25"
+                          >
+                            <Calendar className="w-4 h-4" />
+                            <span>Schedule into Meal Plan</span>
+                          </motion.button>
+                        ) : (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className="space-y-3"
+                          >
+                            <h4 className="text-xs font-black text-brand-dark/50 font-mono uppercase tracking-widest">Add to Planner</h4>
+                            
+                            <div>
+                              <label className="block text-[10px] text-brand-dark/40 font-black uppercase mb-1 font-mono tracking-widest">Select Day</label>
+                              <select
+                                id="planner-day-select"
+                                value={selectedDay}
+                                onChange={(e) => setSelectedDay(e.target.value)}
+                                className="block w-full py-2.5 px-3 border-2 border-brand-border bg-white rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-brand-orange text-brand-dark font-bold"
+                              >
+                                {days.map((d) => <option key={d} value={d}>{d}</option>)}
+                              </select>
                             </div>
-                            <div className="flex gap-1">
-                              {[1, 2, 3, 4].map((s) => (
-                                <button
-                                  key={s}
-                                  onClick={() => setCurrentServings(s)}
-                                  className={`w-6 h-6 rounded-full text-[10px] font-black border flex items-center justify-center transition-all cursor-pointer ${
-                                    currentServings === s
-                                      ? "bg-brand-orange border-brand-orange text-white"
-                                      : "bg-white border-brand-border text-brand-dark hover:bg-brand-orange/5"
-                                  }`}
-                                >
-                                  {s}
-                                </button>
-                              ))}
+
+                            <div>
+                              <label className="block text-[10px] text-brand-dark/40 font-black uppercase mb-1 font-mono tracking-widest">Select Meal</label>
+                              <div className="grid grid-cols-2 gap-1.5">
+                                {periods.map((p) => (
+                                  <motion.button
+                                    key={p.value}
+                                    id={`select-period-${p.value}`}
+                                    onClick={() => setSelectedPeriod(p.value)}
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    className={`py-1.5 px-2 rounded-lg text-[11px] font-black border-2 text-center cursor-pointer transition-all ${
+                                      selectedPeriod === p.value
+                                        ? "bg-brand-dark border-brand-dark text-white"
+                                        : "bg-white border-brand-border text-brand-dark/70 hover:bg-brand-border/40"
+                                    }`}
+                                  >
+                                    {p.label}
+                                  </motion.button>
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                          <div className="flex justify-between items-center text-sm">
-                            <span className="text-brand-dark/50 font-bold">Flavor</span>
-                            <span className="font-black text-brand-dark text-right text-xs max-w-[150px] truncate" title={recipe.flavor}>
-                              {recipe.flavor}
-                            </span>
-                          </div>
-                        </div>
-                      </motion.div>
 
-                      {/* Nutrition Card */}
-                      <motion.div 
-                        whileHover={{ scale: 1.01 }}
-                        className="bg-brand-teal/5 border-2 border-brand-border rounded-2xl p-5"
-                      >
-                        <h4 className="text-xs font-black text-brand-teal uppercase font-mono tracking-widest mb-4">Nutritional Intake</h4>
-                        <div className="grid grid-cols-2 gap-3 text-center">
-                          <div className="bg-white border-2 border-brand-border rounded-xl p-2.5 shadow-xs">
-                            <span className="block text-[10px] text-brand-dark/40 font-mono tracking-widest uppercase font-black">CALORIES</span>
-                            <span className="text-lg font-black text-brand-dark">{recipe.nutritionalFacts.calories}</span>
-                          </div>
-                          <div className="bg-white border-2 border-brand-border rounded-xl p-2.5 shadow-xs">
-                            <span className="block text-[10px] text-brand-dark/40 font-mono tracking-widest uppercase font-black">PROTEIN</span>
-                            <span className="text-lg font-black text-brand-dark">{recipe.nutritionalFacts.protein}</span>
-                          </div>
-                          <div className="bg-white border-2 border-brand-border rounded-xl p-2.5 shadow-xs">
-                            <span className="block text-[10px] text-brand-dark/40 font-mono tracking-widest uppercase font-black">CARBS</span>
-                            <span className="text-lg font-black text-brand-dark">{recipe.nutritionalFacts.carbs}</span>
-                          </div>
-                          <div className="bg-white border-2 border-brand-border rounded-xl p-2.5 shadow-xs">
-                            <span className="block text-[10px] text-brand-dark/40 font-mono tracking-widest uppercase font-black">FAT</span>
-                            <span className="text-lg font-black text-brand-dark">{recipe.nutritionalFacts.fat}</span>
-                          </div>
-                        </div>
-                      </motion.div>
-
-                      {/* Chef Tip Card */}
-                      {recipe.chefTip && (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 15 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.3 }}
-                          whileHover={{ scale: 1.01 }}
-                          className="bg-brand-orange/5 border-2 border-brand-border rounded-2xl p-5"
-                        >
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-base">💡</span>
-                            <h4 className="text-xs font-black text-brand-orange uppercase font-mono tracking-widest">Chef's Secret Tip</h4>
-                          </div>
-                          <p className="text-xs sm:text-sm text-brand-dark/80 italic leading-relaxed font-semibold">
-                            "{recipe.chefTip}"
-                          </p>
-                        </motion.div>
-                      )}
-
-                      {/* Quick Meal Planner Adding */}
-                      {showPlannerQuickAdd && onAddToPlanner && (
-                        <div className="border-2 border-brand-border rounded-2xl p-4 bg-white shadow-xs">
-                          {!showAddMenu ? (
-                            <motion.button
-                              id="add-to-planner-btn"
-                              onClick={() => setShowAddMenu(true)}
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              className="w-full py-3 px-4 bg-brand-orange hover:bg-brand-orange/95 text-white font-black rounded-full text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-brand-orange/25"
-                            >
-                              <Calendar className="w-4 h-4" />
-                              <span>Schedule into Meal Plan</span>
-                            </motion.button>
-                          ) : (
-                            <motion.div 
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              className="space-y-3"
-                            >
-                              <h4 className="text-xs font-black text-brand-dark/50 font-mono uppercase tracking-widest">Add to Planner</h4>
-                              
-                              <div>
-                                <label className="block text-[10px] text-brand-dark/40 font-black uppercase mb-1 font-mono tracking-widest">Select Day</label>
-                                <select
-                                  id="planner-day-select"
-                                  value={selectedDay}
-                                  onChange={(e) => setSelectedDay(e.target.value)}
-                                  className="block w-full py-2.5 px-3 border-2 border-brand-border bg-white rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-brand-orange text-brand-dark font-bold"
-                                >
-                                  {days.map((d) => <option key={d} value={d}>{d}</option>)}
-                                </select>
-                              </div>
-
-                              <div>
-                                <label className="block text-[10px] text-brand-dark/40 font-black uppercase mb-1 font-mono tracking-widest">Select Meal</label>
-                                <div className="grid grid-cols-2 gap-1.5">
-                                  {periods.map((p) => (
-                                    <motion.button
-                                      key={p.value}
-                                      id={`select-period-${p.value}`}
-                                      onClick={() => setSelectedPeriod(p.value)}
-                                      whileHover={{ scale: 1.03 }}
-                                      whileTap={{ scale: 0.97 }}
-                                      className={`py-1.5 px-2 rounded-lg text-[11px] font-black border-2 text-center cursor-pointer transition-all ${
-                                        selectedPeriod === p.value
-                                          ? "bg-brand-dark border-brand-dark text-white"
-                                          : "bg-white border-brand-border text-brand-dark/70 hover:bg-brand-border/40"
-                                      }`}
-                                    >
-                                      {p.label}
-                                    </motion.button>
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="flex gap-2 pt-2 border-t-2 border-brand-border">
-                                <motion.button
-                                  id="cancel-add-planner"
-                                  onClick={() => setShowAddMenu(false)}
-                                  whileHover={{ scale: 1.02 }}
-                                  whileTap={{ scale: 0.98 }}
-                                  className="w-1/2 py-2 border-2 border-brand-border text-brand-dark/70 hover:bg-brand-border/40 text-xs font-bold rounded-full cursor-pointer"
-                                >
-                                  Cancel
-                                </motion.button>
-                                <motion.button
-                                  id="confirm-add-planner"
-                                  onClick={handleQuickAdd}
-                                  whileHover={{ scale: 1.02 }}
-                                  whileTap={{ scale: 0.98 }}
-                                  className="w-1/2 py-2 bg-brand-orange hover:bg-brand-orange/95 text-white text-xs font-bold rounded-full cursor-pointer shadow-md shadow-brand-orange/20"
-                                >
-                                  Confirm
-                                </motion.button>
-                              </div>
-                            </motion.div>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Reset Cooking Progress */}
-                      {(Object.keys(checkedIngredients).length > 0 || Object.keys(completedSteps).length > 0) && (
-                        <motion.button
-                          id="reset-progress-btn"
-                          onClick={resetCookingProgress}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full py-2.5 border-2 border-brand-border text-brand-dark/60 hover:bg-brand-border/40 text-xs font-black rounded-full transition-all cursor-pointer font-mono uppercase tracking-wider"
-                        >
-                          Reset Progress
-                        </motion.button>
-                      )}
-                    </div>
+                            <div className="flex gap-2 pt-2 border-t-2 border-brand-border">
+                              <motion.button
+                                id="cancel-add-planner"
+                                onClick={() => setShowAddMenu(false)}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-1/2 py-2 border-2 border-brand-border text-brand-dark/70 hover:bg-brand-border/40 text-xs font-bold rounded-full cursor-pointer"
+                              >
+                                Cancel
+                              </motion.button>
+                              <motion.button
+                                id="confirm-add-planner"
+                                onClick={handleQuickAdd}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-1/2 py-2 bg-brand-orange hover:bg-brand-orange/95 text-white text-xs font-bold rounded-full cursor-pointer shadow-md shadow-brand-orange/20"
+                              >
+                                Confirm
+                              </motion.button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
