@@ -96,7 +96,9 @@ export default function App() {
 
   const [weatherMode, setWeatherMode] = useState<"caribbean-sun" | "philippine-breeze">("caribbean-sun");
   const [hoveredRecipe, setHoveredRecipe] = useState<Recipe | null>(null);
+  const [previewTrigger, setPreviewTrigger] = useState<"hover" | "click" | null>(null);
   const [hoverTimeout, setHoverTimeout] = useState<any>(null);
+  const [showLoveMessage, setShowLoveMessage] = useState(false);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", type: "Catering", message: "" });
@@ -113,16 +115,31 @@ export default function App() {
   const recipes = CURATED_RECIPES;
 
   const handleHoverStart = (recipe: Recipe) => {
+    if (previewTrigger === "click") return;
     if (hoverTimeout) clearTimeout(hoverTimeout);
     const timeout = setTimeout(() => {
       setHoveredRecipe(recipe);
+      setPreviewTrigger("hover");
     }, 220); // Balanced delay for delightful premium feels
     setHoverTimeout(timeout);
   };
 
   const handleHoverEnd = () => {
+    if (previewTrigger === "click") return;
     if (hoverTimeout) clearTimeout(hoverTimeout);
     setHoveredRecipe(null);
+    setPreviewTrigger(null);
+  };
+
+  const handleRecipeCardClick = (recipe: Recipe) => {
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    setHoveredRecipe(recipe);
+    setPreviewTrigger("click");
+  };
+
+  const closePreview = () => {
+    setHoveredRecipe(null);
+    setPreviewTrigger(null);
   };
 
   const [rainDrops, setRainDrops] = useState<{ id: number; left: string; delay: string; duration: string }[]>([]);
@@ -642,11 +659,14 @@ export default function App() {
 
               {/* Simple Heart Stat (Aesthetic) */}
               <motion.div 
-                whileHover={{ scale: 1.04 }}
-                className="hidden md:flex items-center gap-1.5 bg-brand-border/40 px-3.5 py-2 rounded-full border border-brand-border text-xs font-bold text-brand-dark/60 font-mono uppercase tracking-wider select-none"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowLoveMessage(true)}
+                className="flex items-center gap-1.5 bg-red-50 border-2 border-red-200 hover:bg-red-100 hover:border-red-300 px-3 py-1.5 rounded-full text-xs font-bold text-red-600 tracking-wide select-none cursor-pointer transition-all shadow-xs"
               >
-                <Heart className="w-4 h-4 text-brand-orange fill-brand-orange animate-pulse" />
-                <span>Chef Crafted</span>
+                <Heart className="w-4 h-4 text-red-600 fill-red-500 animate-pulse" />
+                <span className="hidden sm:inline">Chef Crafted</span>
+                <span className="sm:hidden">Crafted</span>
               </motion.div>
             </div>
           </div>
@@ -695,6 +715,7 @@ export default function App() {
                   weatherMode={weatherMode}
                   onHoverStart={handleHoverStart}
                   onHoverEnd={handleHoverEnd}
+                  onClick={handleRecipeCardClick}
                 />
               ))}
             </div>
@@ -1588,11 +1609,130 @@ export default function App() {
         )}
       </div>
 
-      {/* Semi-Full Screen Hover Preview Overlay Portal */}
+      {/* Heartfelt Customer Love Modal */}
+      <AnimatePresence>
+        {showLoveMessage && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            {/* Dark glass backdrop with blur */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowLoveMessage(false)}
+              className="fixed inset-0 bg-brand-dark/60 backdrop-blur-xs cursor-pointer"
+            />
+
+            {/* Modal Body Container */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              className="relative w-full max-w-lg bg-brand-cream border-2 border-brand-border rounded-3xl overflow-hidden shadow-2xl flex flex-col z-10 max-h-[90vh]"
+            >
+              {/* Decorative top bar with orange/teal gradient */}
+              <div className="h-2 bg-gradient-to-r from-brand-orange to-brand-teal" />
+
+              {/* Header section */}
+              <div className="p-5 sm:p-6 border-b border-brand-border flex items-center justify-between bg-white/50 backdrop-blur-xs">
+                <div className="flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-red-500 fill-red-500 animate-pulse" />
+                  <span className="text-xs sm:text-sm font-black font-mono text-brand-orange uppercase tracking-widest">
+                    Customer Love & Gratitude
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowLoveMessage(false)}
+                  className="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center hover:bg-brand-border/40 text-brand-dark transition-all active:scale-90"
+                  aria-label="Close dialog"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Scrollable content area */}
+              <div className="overflow-y-auto p-5 sm:p-8 space-y-6">
+                {/* Community/Customer Image with custom frame */}
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-brand-border bg-white shadow-xs group aspect-[4/3]">
+                  <img
+                    src="https://i.imgur.com/ZoC0iiT.jpg"
+                    alt="Valued customer supporting BoriPino"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      // Fallback image in case imgur link is blocked
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&q=80&w=600";
+                    }}
+                  />
+                  {/* Decorative badge over image */}
+                  <span className="absolute bottom-3 right-3 bg-red-600 text-white text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-md shadow-md flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 animate-spin-slow" />
+                    <span>With Love</span>
+                  </span>
+                </div>
+
+                {/* Love message content */}
+                <div className="space-y-4">
+                  <div className="text-center space-y-1">
+                    <h3 className="text-xl sm:text-2xl font-black text-brand-dark uppercase tracking-tighter">
+                      ¡MIL GRACIAS Y SALAMAT!
+                    </h3>
+                    <p className="text-[10px] sm:text-xs font-mono font-bold text-brand-dark/40 uppercase tracking-wider">
+                      Spreading the Love & Culinary Joy
+                    </p>
+                  </div>
+
+                  <div className="bg-white border border-brand-border p-5 rounded-2xl space-y-3 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-brand-orange" />
+                    <p className="text-brand-dark text-sm sm:text-base font-extrabold leading-relaxed tracking-tight">
+                      To our beloved BoriPino supporters!
+                    </p>
+                    <p className="text-brand-dark/80 text-xs sm:text-sm font-medium leading-relaxed">
+                      We want to share our deepest heartfelt thanks to each and every one of you who has supported BoriPino. Combining the soul and zest of Puerto Rico with the warm, vibrant hospitality of the Philippines is our ultimate passion project. 
+                    </p>
+                    <p className="text-brand-dark/80 text-xs sm:text-sm font-medium leading-relaxed">
+                      Every plate we serve is crafted with pure joy, and we hope these authentic fusion tastes bring warmth, smiles, and delicious memories to your tables. Thank you for visiting us, sharing your feedback, and helping us connect our heritages! We look forward to spreading many more happy culinary moments with you."
+                    </p>
+                    <p className="text-right text-brand-orange text-xs sm:text-sm font-black font-mono uppercase tracking-widest pt-2">
+                      — With Love, The BoriPino Team ❤️
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sticky bottom dismiss button */}
+              <div className="p-4 bg-white/50 border-t border-brand-border backdrop-blur-xs flex justify-end">
+                <button
+                  onClick={() => setShowLoveMessage(false)}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-black tracking-widest uppercase py-3.5 rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Close & Keep Spreading Joy</span>
+                  <Heart className="w-4 h-4 fill-white text-white animate-pulse" />
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Semi-Full Screen Hover/Tap Preview Overlay Portal */}
       {hoveredRecipe && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-8 pointer-events-none">
+        <div 
+          className={`fixed inset-0 z-40 flex items-center justify-center p-4 sm:p-8 ${
+            previewTrigger === "click" ? "pointer-events-auto" : "pointer-events-none"
+          }`}
+        >
           {/* Glass backdrop overlay */}
-          <div className="fixed inset-0 bg-brand-dark/20 transition-opacity duration-300" />
+          <div 
+            className={`fixed inset-0 bg-brand-dark/20 backdrop-blur-xs transition-opacity duration-300 ${
+              previewTrigger === "click" ? "cursor-pointer pointer-events-auto" : "pointer-events-none"
+            }`}
+            onClick={() => {
+              if (previewTrigger === "click") {
+                closePreview();
+              }
+            }}
+          />
 
           {/* Actual Popout Content */}
           <motion.div
@@ -1604,7 +1744,9 @@ export default function App() {
               transition: { type: "spring", damping: 14, stiffness: 170 } 
             }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            className="relative w-full max-w-4xl rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row pointer-events-none md:max-h-[75vh] bg-white border-2"
+            className={`relative w-full max-w-4xl rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row md:max-h-[75vh] bg-white border-2 ${
+              previewTrigger === "click" ? "pointer-events-auto" : "pointer-events-none"
+            }`}
             style={{ 
               borderColor: weatherMode === "caribbean-sun" ? "#C8102E" : "#0038A8",
               boxShadow: weatherMode === "caribbean-sun" 
@@ -1612,6 +1754,19 @@ export default function App() {
                 : "0 25px 50px -12px rgba(0, 56, 168, 0.3)"
             }}
           >
+            {/* Close Button for click/tap preview */}
+            {previewTrigger === "click" && (
+              <motion.button
+                id="close-preview-popout"
+                onClick={closePreview}
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute top-4 right-4 z-50 bg-brand-dark/80 hover:bg-brand-dark text-white p-2.5 rounded-full backdrop-blur-md border border-white/10 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </motion.button>
+            )}
+
             {/* Food Image Portion */}
             <div className="relative w-full md:w-1/2 h-56 md:h-auto overflow-hidden bg-brand-border/25">
               <img

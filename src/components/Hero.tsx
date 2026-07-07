@@ -1,8 +1,6 @@
-import React from "react";
-import { Search, ChefHat, Sparkles } from "lucide-react";
-import { motion } from "motion/react";
-// @ts-ignore
-import heroImage from "../assets/images/hero_banner_1783019637681.jpg";
+import React, { useState, useEffect } from "react";
+import { Search, ChefHat, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 interface HeroProps {
   searchQuery: string;
@@ -23,6 +21,58 @@ export default function Hero({
   isShaking = false,
   weatherMode = "caribbean-sun",
 }: HeroProps) {
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  const slides = [
+    {
+      image: "https://i.imgur.com/eoQbQWc.jpeg",
+      title: "Lechon Rice Bowl",
+      description: "Juicy slow-roasted pork shoulder with bubbly crispy skin over warm jasmine rice",
+    },
+    {
+      image: "https://i.imgur.com/SxsIXtN.jpeg",
+      title: "Pastelon Lasagna",
+      description: "Layered sweet yellow plantains and savory seasoned ground beef picadillo",
+    },
+    {
+      image: "https://i.imgur.com/58fLlWr.jpeg",
+      title: "Crispy Golden Lumpia",
+      description: "Traditional paper-thin golden fried spring rolls served with sweet chili dip",
+    },
+    {
+      image: "https://i.imgur.com/lh89B9G.jpeg",
+      title: "Silky Tembleque",
+      description: "Rich, creamy coconut milk pudding dusted with ground cinnamon and a signature jiggle",
+    },
+    {
+      image: "https://i.imgur.com/wufF2zG.jpeg",
+      title: "Chicken Inasal Skewer",
+      description: "Flame-grilled lemongrass calamansi chicken skewer basted in achiote oil",
+    },
+    {
+      image: "https://i.imgur.com/J7ROTHV.jpeg",
+      title: "Adobo Tostones",
+      description: "Perfectly seasoned, twice-fried golden green plantain rounds served with garlic mayoketchup",
+    }
+  ];
+
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(slideTimer);
+  }, []);
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveIdx((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveIdx((prev) => (prev + 1) % slides.length);
+  };
+
   const categories = ["All", "Mains", "Salads", "Desserts", "Drinks", "Appetizers"];
 
   const isPR = weatherMode === "caribbean-sun";
@@ -82,7 +132,7 @@ export default function Hero({
               id="hero-headline" 
               className={`text-2xl tracking-tighter font-black text-brand-dark sm:text-5xl md:text-6xl font-sans leading-none uppercase ${isShaking ? "animate-shake" : ""}`}
             >
-              <span className="block">BoriPino</span>
+              <span className="block"><span className="text-red-600">Bori</span>Pino</span>
               <span className={`block text-lg sm:text-4xl md:text-5xl font-extrabold tracking-tight mt-1 sm:mt-1.5 ${isPR ? "animate-textShinePR" : "animate-textShinePH"}`}>
                 SABOS BORICUA x LASANG PINOY
               </span>
@@ -172,41 +222,86 @@ export default function Hero({
               initial={{ opacity: 0, scale: 0.9, x: 40 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.3 }}
-              className="relative mx-auto w-full max-w-lg lg:max-w-none rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl shadow-brand-dark/5 border-2 border-brand-border aspect-[4/3] bg-white p-1 sm:p-2"
+              className="relative mx-auto w-full max-w-lg lg:max-w-none rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl shadow-brand-dark/5 aspect-[4/3] bg-brand-dark select-none group"
             >
-              <div className="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden">
-                <motion.img
-                  id="hero-banner-image"
-                  src={heroImage}
-                  alt="Gourmet dining ingredients and dish arrangement"
-                  whileHover={{ scale: 1.04 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-full h-full object-cover cursor-pointer"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="w-full h-full overflow-hidden relative bg-black flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeIdx}
+                    id="hero-banner-image"
+                    src={slides[activeIdx].image}
+                    alt={slides[activeIdx].title}
+                    initial={{ opacity: 0.3, scale: 1.08, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0.3, scale: 0.96, filter: "blur(4px)" }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="w-full h-full object-cover cursor-pointer absolute inset-0"
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
+
+                {/* Left Arrow Button */}
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-brand-dark hover:text-brand-orange w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border border-brand-border shadow-md transition-all cursor-pointer opacity-0 group-hover:opacity-100 focus:opacity-100 select-none active:scale-90"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                </button>
+
+                {/* Right Arrow Button */}
+                <button
+                  onClick={handleNext}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-brand-dark hover:text-brand-orange w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center border border-brand-border shadow-md transition-all cursor-pointer opacity-0 group-hover:opacity-100 focus:opacity-100 select-none active:scale-90"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                </button>
+
+                {/* Slide Indicators / Dots */}
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 bg-brand-dark/55 px-2.5 py-1.5 rounded-full backdrop-blur-md">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveIdx(idx);
+                      }}
+                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                        activeIdx === idx ? "bg-brand-orange w-4" : "bg-white/60 hover:bg-white w-1.5"
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
+
               {/* Overlay shading to give it high prestige */}
-              <div className="absolute inset-1 sm:inset-2 bg-gradient-to-t from-brand-dark/20 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl" />
+              <div className="absolute inset-1 sm:inset-2 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none rounded-xl sm:rounded-2xl z-10" />
               
-              {/* Floating Chef Quote */}
+              {/* Floating Dynamic Slide Card */}
               <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: [0, -6, 0]
-                }}
-                transition={{
-                  opacity: { delay: 0.8, duration: 0.4 },
-                  y: { repeat: Infinity, duration: 5, ease: "easeInOut" }
-                }}
-                whileHover={{ scale: 1.02 }}
-                className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-4 shadow-xl border border-brand-border flex items-start gap-2 sm:gap-3"
+                key={activeIdx}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl border border-brand-border flex items-start gap-2.5 sm:gap-3 z-20"
               >
-                <span className="text-lg sm:text-2xl">👨‍🍳</span>
-                <div>
-                  <p className="text-[8px] sm:text-[10px] text-brand-orange font-black font-mono uppercase tracking-widest">CHEF'S WISDOM</p>
-                  <p className="text-[10px] sm:text-sm text-brand-dark italic mt-0.5 font-semibold leading-snug sm:leading-relaxed">
-                    "Cooking is about elevating humble ingredients into memories through craft and patience."
+                <span className="text-xl sm:text-2xl mt-0.5">🍽️</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[8px] sm:text-[9px] text-brand-orange font-black font-mono uppercase tracking-widest">
+                      {activeIdx === 0 ? "CHEF'S FEATURE" : "DISH SHOWCASE"}
+                    </p>
+                    <span className="text-[9px] font-mono font-bold text-brand-dark/50 bg-brand-border/40 px-1.5 py-0.5 rounded-md">
+                      {activeIdx + 1} / {slides.length}
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-base font-black text-brand-dark uppercase tracking-tight mt-0.5 truncate">
+                    {slides[activeIdx].title}
+                  </h4>
+                  <p className="text-[10px] sm:text-xs text-brand-dark/80 mt-1 font-semibold leading-snug sm:leading-relaxed">
+                    {slides[activeIdx].description}
                   </p>
                 </div>
               </motion.div>
