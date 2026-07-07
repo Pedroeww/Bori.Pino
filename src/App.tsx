@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent, MouseEvent } from "react";
-import { ChefHat, BookOpen, Heart, Mail, Phone, Clock, MapPin, Check, Sun, CloudRain, Sparkles, Star, RotateCw, UploadCloud, X, FileImage, FileVideo } from "lucide-react";
+import { ChefHat, BookOpen, Heart, Mail, Phone, Clock, MapPin, Check, Sun, CloudRain, Sparkles, Star, RotateCw, UploadCloud, X, FileImage, FileVideo, Instagram } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Hero from "./components/Hero";
 import RecipeCard from "./components/RecipeCard";
@@ -338,6 +338,14 @@ export default function App() {
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
+
+    const subject = `BoriPino Inquiry - ${formData.type}`;
+    const body = `Hi BoriPino,\n\nMy name is ${formData.name || "Friend"}.\n\nInquiry Type: ${formData.type}\nMessage:\n${formData.message}\n\nSender Email: ${formData.email}${uploadedFile ? `\nAttached File: ${uploadedFile.name} (${uploadedFile.size})` : ""}`;
+
+    const mailtoUrl = `mailto:bori.pinoo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Trigger mailto so the user's browser opens their mail client
+    window.location.href = mailtoUrl;
   };
 
   const formatBytes = (bytes: number, decimals = 2) => {
@@ -822,6 +830,61 @@ export default function App() {
                     </p>
                   </div>
 
+                  {/* Instagram Collaboration Pop Card */}
+                  <motion.a
+                    id="instagram-collab-popcard"
+                    href="https://www.instagram.com/bori.pino"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ 
+                      scale: [1, 1.03, 0.99, 1.04, 1],
+                      opacity: 1,
+                      boxShadow: [
+                        "0 10px 15px -3px rgba(249, 115, 22, 0.1), 0 4px 6px -2px rgba(249, 115, 22, 0.05)",
+                        "0 20px 25px -5px rgba(236, 72, 153, 0.25), 0 10px 10px -5px rgba(236, 72, 153, 0.15)",
+                        "0 10px 15px -3px rgba(249, 115, 22, 0.1), 0 4px 6px -2px rgba(249, 115, 22, 0.05)"
+                      ]
+                    }}
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      scale: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
+                      boxShadow: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
+                    }}
+                    className="relative block overflow-hidden rounded-2xl p-[2px] bg-gradient-to-r from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] cursor-pointer transition-all duration-300 group"
+                  >
+                    <div className="bg-white/95 backdrop-blur-sm rounded-[14px] p-4 flex items-center justify-between gap-3 transition-colors group-hover:bg-white">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white shrink-0 shadow-md">
+                          <Instagram className="w-5 h-5" />
+                        </div>
+                        <div className="text-left">
+                          <span className="inline-block px-2 py-0.5 rounded-full bg-[#ee2a7b]/10 text-[#ee2a7b] text-[9px] font-black uppercase tracking-widest mb-1 animate-pulse">
+                            Collab Spotlight ✨
+                          </span>
+                          <h4 className="font-extrabold text-xs sm:text-sm text-brand-dark uppercase tracking-tight leading-snug group-hover:text-[#ee2a7b] transition-colors">
+                            MESSAGE US ON INSTAGRAM FOR COLLABORATIONS!
+                          </h4>
+                          <p className="text-brand-dark/50 text-[10px] sm:text-xs font-mono mt-0.5">Click to view @bori.pino</p>
+                        </div>
+                      </div>
+                      <motion.div 
+                        animate={{ 
+                          scale: [1, 1.12, 1],
+                        }}
+                        transition={{
+                          duration: 1.8,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="bg-gradient-to-r from-[#ee2a7b] to-[#6228d7] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full shrink-0 shadow-sm select-none"
+                      >
+                        tap me!
+                      </motion.div>
+                    </div>
+                  </motion.a>
+
                   {/* Direct Info List */}
                   <div className="space-y-5 text-sm">
                     <div className="flex items-start gap-4">
@@ -830,7 +893,12 @@ export default function App() {
                       </div>
                       <div>
                         <h4 className="font-bold text-brand-dark">Culinary Inquiries</h4>
-                        <p className="text-brand-dark/75 mt-0.5 font-mono">bori.pinoo@gmail.com</p>
+                        <a 
+                          href="mailto:bori.pinoo@gmail.com" 
+                          className="text-brand-dark/75 hover:text-brand-orange mt-0.5 font-mono block transition-colors duration-200 underline decoration-brand-orange/30 decoration-2 underline-offset-2"
+                        >
+                          bori.pinoo@gmail.com
+                        </a>
                         <p className="text-brand-dark/50 text-xs mt-0.5">Response within 24 hours</p>
                       </div>
                     </div>
@@ -897,6 +965,15 @@ export default function App() {
                       <p className="text-brand-dark/70 text-sm max-w-md mx-auto leading-relaxed">
                         ¡Muchas gracias, <span className="font-bold text-brand-orange">{formData.name || "friend"}</span>! Your inquiry regarding <span className="font-bold text-brand-teal">{formData.type}</span> {uploadedFile ? `(with attachment: ${uploadedFile.name})` : ""} has been stamped and sent straight to our fusion kitchen. We'll be in touch real soon!
                       </p>
+                      <div className="pt-2 text-xs text-brand-dark/60 max-w-md mx-auto">
+                        <p className="mb-2">Want to send it as a direct email from your own mail application too?</p>
+                        <a 
+                          href={`mailto:bori.pinoo@gmail.com?subject=BoriPino Inquiry - ${encodeURIComponent(formData.type)}&body=${encodeURIComponent(`Hi BoriPino,\n\nMy name is ${formData.name || "Friend"}. I would like to inquire about ${formData.type}.\n\nMessage:\n${formData.message}\n\nMy contact email: ${formData.email}`)}`}
+                          className="inline-flex items-center gap-1.5 font-bold text-brand-orange hover:text-brand-teal transition-colors underline decoration-brand-orange/30 hover:decoration-brand-teal/30"
+                        >
+                          📬 Draft email directly to bori.pinoo@gmail.com
+                        </a>
+                      </div>
                       <button
                         onClick={() => {
                           setFormSubmitted(false);
@@ -1560,6 +1637,13 @@ export default function App() {
           <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-4 text-xs text-brand-dark/50 font-mono tracking-wide">
             <p>© 2026 BoriPino - SABOS BORICUA x LASANG PINOY. All rights reserved.</p>
             <div className="flex gap-4 font-bold text-brand-dark/80">
+              <a 
+                href="mailto:bori.pinoo@gmail.com" 
+                className="hover:text-brand-orange transition-colors cursor-pointer"
+              >
+                bori.pinoo@gmail.com
+              </a>
+              <span className="text-brand-dark/20">|</span>
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="hover:text-brand-orange transition-colors cursor-pointer"
