@@ -108,7 +108,7 @@ export default function RecipeCard({
           <div className="flex flex-col items-center border-r-2 border-brand-border">
             <Users className="w-3 h-3 sm:w-4 sm:h-4 text-brand-dark/40 mb-0.5" />
             <span className="text-[9px] sm:text-[11px] font-bold text-brand-dark">
-              {Math.min(recipe.servings, 4)} people
+              1 person
             </span>
             <span className="text-[7px] sm:text-[9px] text-brand-dark/40 uppercase font-mono tracking-wider sm:tracking-widest font-black">Servings</span>
           </div>
