@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent, MouseEvent } from "react";
-import { ChefHat, BookOpen, Heart, Mail, Phone, Clock, MapPin, Check, Sun, CloudRain, Sparkles, Star, RotateCw, UploadCloud, X, FileImage, FileVideo, Instagram } from "lucide-react";
+import { ChefHat, BookOpen, Heart, Mail, Phone, Clock, MapPin, Check, Sun, CloudRain, Sparkles, Star, RotateCw, UploadCloud, X, FileImage, FileVideo, Instagram, Bell, Flame } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Hero from "./components/Hero";
 import RecipeCard from "./components/RecipeCard";
@@ -111,6 +111,7 @@ export default function App() {
   const [cursorEmoji, setCursorEmoji] = useState("🍲");
   const [globalMousePos, setGlobalMousePos] = useState({ x: -100, y: -100 });
   const [isMouseOnWindow, setIsMouseOnWindow] = useState(false);
+  const [showNewMenuNotification, setShowNewMenuNotification] = useState(true);
 
   const recipes = CURATED_RECIPES;
 
@@ -396,7 +397,12 @@ export default function App() {
 
   // Filtered recipes based on search & category select
   const filteredRecipes = recipes.filter((recipe) => {
-    const matchesCategory = selectedCategory === "All" || recipe.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === "All"
+        ? true
+        : selectedCategory.includes("New Additions")
+        ? recipe.isNew === true
+        : recipe.category === selectedCategory;
     const matchesSearch =
       searchQuery === "" ||
       recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -695,6 +701,81 @@ export default function App() {
       {/* Main Main Stage Area */}
       <main className="relative z-10 flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
         <div className="space-y-8 animate-fadeIn">
+          {/* Popping Animated New Dishes Notification Banner */}
+          <AnimatePresence>
+            {showNewMenuNotification && (
+              <motion.div
+                id="new-dishes-pop-notification"
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: [1, 1.015, 1],
+                  boxShadow: [
+                    "0 10px 25px -5px rgba(249, 115, 22, 0.15), 0 8px 10px -6px rgba(249, 115, 22, 0.1)",
+                    "0 20px 35px -5px rgba(249, 115, 22, 0.3), 0 10px 15px -5px rgba(239, 68, 68, 0.2)",
+                    "0 10px 25px -5px rgba(249, 115, 22, 0.15), 0 8px 10px -6px rgba(249, 115, 22, 0.1)"
+                  ]
+                }}
+                exit={{ opacity: 0, y: -15, scale: 0.95, transition: { duration: 0.2 } }}
+                transition={{
+                  scale: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                }}
+                className="relative overflow-hidden rounded-2xl p-[2px] bg-gradient-to-r from-amber-500 via-brand-orange to-rose-500 shadow-xl"
+              >
+                <div className="bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-[14px] flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-3.5 w-full sm:w-auto">
+                    <div className="relative">
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white shrink-0 shadow-md">
+                        <Flame className="w-6 h-6 animate-bounce" />
+                      </div>
+                      <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                      </span>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs animate-pulse">
+                          Fresh Off The Stove ✨
+                        </span>
+                        <span className="text-xs font-mono font-bold text-brand-orange">JUST ADDED</span>
+                      </div>
+                      <h3 className="font-extrabold text-sm sm:text-base text-brand-dark leading-snug">
+                        New Dishes Added to the Menu!
+                      </h3>
+                      <p className="text-brand-dark/70 text-xs mt-0.5 font-medium">
+                        Try our freshly added favorites: <strong className="text-brand-orange">Kare Kare</strong>, <strong className="text-brand-orange">Chicken Inasal</strong>, &amp; <strong className="text-brand-orange">Mofongo</strong>!
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+                    <button
+                      onClick={() => {
+                        setSelectedCategory("New Additions 🔥");
+                        scrollExploreIntoView();
+                      }}
+                      className="flex-1 sm:flex-initial px-4 py-2 bg-gradient-to-r from-brand-orange to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-extrabold text-xs rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Filter New Dishes 🔥</span>
+                    </button>
+                    <button
+                      onClick={() => setShowNewMenuNotification(false)}
+                      className="p-2 text-brand-dark/40 hover:text-brand-dark hover:bg-brand-border/40 rounded-xl transition-colors cursor-pointer"
+                      title="Dismiss notification"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Explorer Title Anchor */}
           <div id="recipe-explore-anchor" className="scroll-mt-20 border-b-2 border-brand-border pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>

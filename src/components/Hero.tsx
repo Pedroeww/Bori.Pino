@@ -73,7 +73,7 @@ export default function Hero({
     setActiveIdx((prev) => (prev + 1) % slides.length);
   };
 
-  const categories = ["All", "Mains", "Salads", "Desserts", "Drinks", "Appetizers"];
+  const categories = ["All", "New Additions 🔥", "Mains", "Desserts", "Drinks", "Appetizers"];
 
   const isPR = weatherMode === "caribbean-sun";
 

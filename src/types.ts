@@ -26,6 +26,7 @@ export interface Recipe {
   tags: string[];
   chefTip?: string;
   isAiGenerated?: boolean;
+  isNew?: boolean;
 }
 
 export interface MealPlan {

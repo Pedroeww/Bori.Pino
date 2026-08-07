@@ -424,5 +424,130 @@ export const CURATED_RECIPES: Recipe[] = [
     },
     tags: ["Filipino", "Tofu", "Sisig", "Rice Bowl", "Vegetarian", "Crispy", "Smoky", "Tangy"],
     chefTip: "For an extra smoky finish that mimics traditional sizzling sisig plates, let the mixed tofu sit undisturbed in the hot pan for an extra minute to get a slight char on the bottom before serving!"
+  },
+  {
+    id: "kare-kare",
+    title: "Kare Kare",
+    isNew: true,
+    description: "A savory Filipino stew made with a mix of proteins and vegetables. Its carefully cooked in a rich cream peanut sauce.",
+    image: "https://i.imgur.com/L7vdRGD.jpeg",
+    prepTime: 25,
+    cookTime: 60,
+    servings: 6,
+    difficulty: "Medium",
+    spiceFactor: "None",
+    flavor: "Savory Nutty Peanut",
+    category: "Mains",
+    rating: 4.9,
+    ingredients: [
+      { name: "Beef Chuck or Oxtail (cut into chunks)", amount: "2 lbs", category: "Meat" },
+      { name: "Creamy Peanut Butter", amount: "1/2 cup", category: "Pantry" },
+      { name: "Ground Toasted Rice Powder", amount: "1/4 cup", category: "Pantry" },
+      { name: "Annatto Water/Oil (for rich color)", amount: "3 tbsp", category: "Pantry" },
+      { name: "Eggplant (sliced into rounds)", amount: "1 medium", category: "Produce" },
+      { name: "Sitaw / Long Green Beans (cut into 2-inch pieces)", amount: "10 pieces", category: "Produce" },
+      { name: "Bok Choy or Pechay", amount: "1 bunch", category: "Produce" },
+      { name: "Banana Blossom (sliced)", amount: "1/2 cup", category: "Produce" },
+      { name: "Garlic (minced) & Onion (chopped)", amount: "1 head garlic, 1 onion", category: "Produce" },
+      { name: "Beef Broth", amount: "4 cups", category: "Pantry" },
+      { name: "Bagoong Alamang (Sautéed Shrimp Paste)", amount: "For serving", category: "Pantry" }
+    ],
+    instructions: [
+      "Simmer the Meat: In a large pot, simmer beef chuck or oxtail in water until melt-in-your-mouth tender (about 1 to 1.5 hours). Drain and reserve 4 cups of beef broth.",
+      "Sauté Aromatics: In a separate heavy-bottom pot, heat oil and sauté the minced garlic and chopped onion until soft and fragrant.",
+      "Build the Peanut Sauce: Add the tender beef pieces, then pour in the reserved beef broth, creamy peanut butter, and annatto water. Stir continuously over medium heat until smooth and golden-orange.",
+      "Thicken the Stew: Mix the ground toasted rice powder with 1/2 cup of warm water, then stir it into the stew. Simmer for 8-10 minutes while stirring until the sauce thickens into a glossy, velvety peanut gravy.",
+      "Blanch the Vegetables: In a separate pot of boiling salted water, blanch the eggplant, long green beans, banana blossom, and bok choy until bright green and tender-crisp. Drain immediately.",
+      "Assemble and Serve: Gently fold the cooked vegetables into the rich peanut stew or arrange them neatly on top. Serve piping hot with warm steamed jasmine rice and a side of savory bagoong alamang (shrimp paste)!"
+    ],
+    nutritionalFacts: {
+      calories: 520,
+      protein: "34g",
+      carbs: "20g",
+      fat: "35g"
+    },
+    tags: ["Filipino", "Kare Kare", "Stew", "Beef", "Peanut Sauce", "Bagoong", "Main Course"],
+    chefTip: "Cooking or blanching the vegetables separately keeps them bright, crisp, and vibrant rather than overcooked. Always serve Kare Kare with authentic Bagoong Alamang (fermented shrimp paste) on the side to give every bite that iconic savory-salty flavor balance!"
+  },
+  {
+    id: "chicken-inasal",
+    title: "Chicken Inasal",
+    isNew: true,
+    description: "A beloved Filipino grilled chicken dish known for its vibrant marinade and juicy, charred finish. The Filipino pinchos!",
+    image: "https://i.imgur.com/kBKYLTz.jpeg",
+    prepTime: 30,
+    cookTime: 25,
+    servings: 4,
+    difficulty: "Medium",
+    spiceFactor: "Mild",
+    flavor: "Citrusy Garlic & Annatto Grill",
+    category: "Mains",
+    rating: 4.9,
+    ingredients: [
+      { name: "Chicken Quarters or Thighs", amount: "2 lbs", category: "Meat" },
+      { name: "Calamansi Juice (or Lime Juice)", amount: "1/4 cup", category: "Produce" },
+      { name: "Coconut Vinegar (or Cane Vinegar)", amount: "1/2 cup", category: "Pantry" },
+      { name: "Lemongrass (smashed & finely chopped)", amount: "2 stalks", category: "Produce" },
+      { name: "Garlic (minced) & Ginger (grated)", amount: "2 heads garlic, 1 inch ginger", category: "Produce" },
+      { name: "Brown Sugar", amount: "1 tbsp", category: "Pantry" },
+      { name: "Annatto Oil (Atsuete Oil for basting)", amount: "1/3 cup", category: "Pantry" },
+      { name: "Melted Butter or Margarine", amount: "3 tbsp", category: "Pantry" },
+      { name: "Salt & Black Pepper", amount: "1 tbsp salt, 1 tsp pepper", category: "Pantry" }
+    ],
+    instructions: [
+      "Prepare Marinade: In a bowl, mix calamansi juice, coconut vinegar, minced garlic, grated ginger, chopped lemongrass, brown sugar, salt, and black pepper.",
+      "Marinate Chicken: Coat chicken quarters thoroughly in marinade. Cover and refrigerate for at least 3 to 4 hours (overnight preferred for maximum flavor).",
+      "Prepare Annatto Basting Oil: Combine annatto oil and melted butter in a small bowl for brushing on the grill.",
+      "Grill Over Charcoal: Heat grill to medium-high. Place chicken skin-side down and grill, turning every 5-6 minutes.",
+      "Baste Generously: Continuously brush chicken with the annatto-butter basting mixture while grilling until charred, aromatic, and cooked through (internal temp 165°F).",
+      "Serve: Serve hot over steamed jasmine rice or garlic sinangag, with spiced sinamak vinegar and additional annatto oil drizzled on top!"
+    ],
+    nutritionalFacts: {
+      calories: 480,
+      protein: "42g",
+      carbs: "8g",
+      fat: "30g"
+    },
+    tags: ["Filipino", "Chicken Inasal", "Grill", "Chicken", "Pinchos", "Annatto", "Main Course"],
+    chefTip: "Baste frequently with the warm annatto-butter mixture during the last few minutes of grilling to get that iconic golden-orange sheen and smoky caramelized crust!"
+  },
+  {
+    id: "mofongo",
+    title: "Mofongo",
+    isNew: true,
+    description: "A well known puerto rican dish of deep-friend green plantains mashed together with garlic and shaped into a ball. Traditionally made with chicharron, friend pork rind.",
+    image: "https://i.imgur.com/meCcw1Z.jpeg",
+    prepTime: 20,
+    cookTime: 20,
+    servings: 4,
+    difficulty: "Medium",
+    spiceFactor: "None",
+    flavor: "Garlicky Savory Crispy",
+    category: "Mains",
+    rating: 4.9,
+    ingredients: [
+      { name: "Green Plantains (peeled & sliced into 1-inch rounds)", amount: "3 large", category: "Produce" },
+      { name: "Chicharrón / Crispy Pork Rinds (crushed)", amount: "1 cup", category: "Pantry" },
+      { name: "Garlic Cloves (minced or mashed)", amount: "4-6 cloves", category: "Produce" },
+      { name: "Olive Oil or Rendered Pork Fat", amount: "3 tbsp", category: "Pantry" },
+      { name: "Chicken or Beef Broth", amount: "1/4 cup", category: "Pantry" },
+      { name: "Salt and Black Pepper", amount: "To taste", category: "Pantry" },
+      { name: "Oil for frying (vegetable or canola)", amount: "2 cups", category: "Pantry" }
+    ],
+    instructions: [
+      "Fry the Plantains: Heat vegetable oil in a deep skillet over medium heat (around 350°F). Fry green plantain rounds for 10-12 minutes until golden on the outside and tender inside when pierced with a fork. Drain on paper towels.",
+      "Mash Garlic Base: In a traditional wooden pilón (mortar and pestle), crush garlic cloves with a pinch of salt and olive oil until a smooth paste forms.",
+      "Incorporate Plantains & Chicharrón: Add a few warm fried plantain rounds and crushed chicharrón into the pilón. Mash firmly together.",
+      "Moisten & Season: Drizzle in a spoon of warm broth and olive oil as you mash to achieve a cohesive, moist texture.",
+      "Form and Serve: Shape the mashed mofongo into a firm half-sphere or ball using the pilón or a small bowl. Invert onto a plate and serve warm alongside garlic broth, pork roast (pernil), or seafood!"
+    ],
+    nutritionalFacts: {
+      calories: 420,
+      protein: "14g",
+      carbs: "52g",
+      fat: "22g"
+    },
+    tags: ["Puerto Rican", "Mofongo", "Plantains", "Garlic", "Chicharron", "Boricua", "Main Course"],
+    chefTip: "Mash the plantains while they are still piping hot right out of the fryer! Warm plantains absorb the garlic oil and broth far better, creating that authentic, pliable texture."
   }
 ];

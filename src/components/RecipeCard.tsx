@@ -39,7 +39,11 @@ export default function RecipeCard({
           : "0 20px 25px -5px rgba(0,56,168,0.12), 0 10px 10px -5px rgba(0,56,168,0.08)"
       }}
       whileTap={{ scale: 0.98 }}
-      className={`group bg-white rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-brand-border transition-all duration-300 flex flex-col h-full cursor-pointer ${
+      className={`group bg-white rounded-2xl sm:rounded-3xl overflow-hidden border-2 transition-all duration-300 flex flex-col h-full cursor-pointer relative ${
+        recipe.isNew
+          ? "border-brand-orange shadow-[0_0_20px_rgba(249,115,22,0.25)] ring-2 ring-brand-orange/40"
+          : "border-brand-border"
+      } ${
         isPR 
           ? "hover:animate-borderGlowPR" 
           : "hover:animate-borderGlowPH"
@@ -64,7 +68,23 @@ export default function RecipeCard({
           transition={{ duration: 0.4 }}
           referrerPolicy="no-referrer"
         />
-        {recipe.isAiGenerated && (
+        {recipe.isNew && (
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: 1
+            }}
+            transition={{
+              scale: { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
+            }}
+            className="absolute top-1.5 left-1.5 sm:top-3 sm:left-3 bg-gradient-to-r from-amber-500 via-brand-orange to-rose-500 text-white text-[8px] sm:text-[10px] font-black tracking-widest uppercase px-2 py-0.5 sm:px-3 sm:py-1 rounded-full flex items-center gap-1 shadow-lg z-10 border border-white/40"
+          >
+            <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 animate-spin" />
+            <span>NEW DISH 🔥</span>
+          </motion.div>
+        )}
+        {recipe.isAiGenerated && !recipe.isNew && (
           <div className="absolute top-1.5 left-1.5 sm:top-3 sm:left-3 bg-brand-orange text-white text-[8px] sm:text-[10px] font-black tracking-widest uppercase px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-full flex items-center gap-0.5 sm:gap-1 shadow-md">
             <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 animate-pulse" />
             <span>AI Crafted</span>
@@ -74,15 +94,20 @@ export default function RecipeCard({
           <Star className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-brand-orange text-brand-orange" />
           <span>{recipe.rating.toFixed(1)}</span>
         </div>
-        <div className="absolute bottom-1.5 left-1.5 sm:bottom-3 sm:left-3 bg-brand-teal text-white text-[8px] sm:text-[10px] font-black tracking-widest uppercase px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-xs">
+        <div className="absolute bottom-1.5 left-1.5 sm:bottom-3 sm:left-3 bg-brand-teal text-white text-[8px] sm:text-[10px] font-black tracking-widest uppercase px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md shadow-xs flex items-center gap-1">
           {recipe.category}
         </div>
       </div>
 
       <div className="p-2.5 sm:p-5 flex flex-col flex-grow">
         <div className="flex-grow">
-          <h3 className="text-xs sm:text-lg font-black text-brand-dark leading-snug group-hover:text-brand-orange transition-colors line-clamp-1">
-            {recipe.title}
+          <h3 className="text-xs sm:text-lg font-black text-brand-dark leading-snug group-hover:text-brand-orange transition-colors line-clamp-1 flex items-center gap-1.5">
+            <span>{recipe.title}</span>
+            {recipe.isNew && (
+              <span className="bg-gradient-to-r from-amber-500 to-brand-orange text-white text-[8px] sm:text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md animate-pulse">
+                NEW
+              </span>
+            )}
           </h3>
           <div 
             onClick={(e) => {
