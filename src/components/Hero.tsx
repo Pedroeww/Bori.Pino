@@ -40,16 +40,6 @@ export default function Hero({
       description: "Traditional paper-thin golden fried spring rolls served with sweet chili dip",
     },
     {
-      image: "https://i.imgur.com/lh89B9G.jpeg",
-      title: "Silky Tembleque",
-      description: "Rich, creamy coconut milk pudding dusted with ground cinnamon and a signature jiggle",
-    },
-    {
-      image: "https://i.imgur.com/wufF2zG.jpeg",
-      title: "Chicken Inasal Skewer",
-      description: "Flame-grilled lemongrass calamansi chicken skewer basted in achiote oil",
-    },
-    {
       image: "https://i.imgur.com/J7ROTHV.jpeg",
       title: "Adobo Tostones",
       description: "Perfectly seasoned, twice-fried golden green plantain rounds served with garlic mayoketchup",

@@ -2,46 +2,6 @@ import { Recipe } from "../types";
 
 export const CURATED_RECIPES: Recipe[] = [
   {
-    id: "tembleque",
-    title: "Tembleque",
-    description: "A rich Traditional Puerto Rican Dessert consisting of a silky-smooth, creamy coconut pudding. This Tropical Dessert got its name from the Spanish word “Temblar” Which means to tremble or shake. Which References the desserts signature jiggle.",
-    image: "https://i.imgur.com/lh89B9G.jpeg",
-    prepTime: 10,
-    cookTime: 15,
-    servings: 6,
-    difficulty: "Easy",
-    spiceFactor: "None",
-    flavor: "Sweet & Creamy Coconut",
-    category: "Desserts",
-    rating: 4.9,
-    ingredients: [
-      { name: "Coconut Milk", amount: "2 cans (13.5 oz each)", category: "Pantry" },
-      { name: "Cornstarch", amount: "1/2 cup", category: "Pantry" },
-      { name: "Sugar", amount: "2/3 cup", category: "Pantry" },
-      { name: "Salt", amount: "1/4 tsp", category: "Pantry" },
-      { name: "Orange Blossom Water (optional)", amount: "1 tsp", category: "Pantry" },
-      { name: "Ground Cinnamon", amount: "For dusting", category: "Pantry" }
-    ],
-    instructions: [
-      "In a medium saucepan, whisk together the cornstarch, sugar, and salt.",
-      "Slowly pour in the coconut milk while whisking continuously to ensure the cornstarch dissolves completely without any lumps.",
-      "Place the saucepan over medium heat. Cook, stirring constantly with a wooden spoon or silicone spatula, making sure to scrape the bottom and sides of the pan.",
-      "As it heats (about 8-10 minutes), the mixture will suddenly thicken into a smooth, glossy paste. Once it starts bubbling, reduce heat to low and cook for 2 more minutes, stirring vigorously.",
-      "Remove from heat and stir in the orange blossom water if using.",
-      "Rinse your molds or ramekins with cold water (do not dry them; the moisture helps unmold the pudding). Pour the hot pudding mixture into the molds.",
-      "Let cool to room temperature, then cover with plastic wrap and refrigerate for at least 3-4 hours (or overnight) until completely set and cold.",
-      "To serve, gently press the edges of the pudding to release the vacuum, invert onto a dessert plate, and tap. Dust generously with ground cinnamon and watch it jiggle!"
-    ],
-    nutritionalFacts: {
-      calories: 220,
-      protein: "2g",
-      carbs: "28g",
-      fat: "12g"
-    },
-    tags: ["Puerto Rican", "Dessert", "Coconut", "Vegan", "Gluten-Free", "Jiggle"],
-    chefTip: "Rinsing the molds with cold water before pouring in the warm pudding creates a micro-barrier of water that makes unmolding the Tembleque incredibly easy without ruining its smooth, glassy surface!"
-  },
-  {
     id: "pastelon",
     title: "Pastelon",
     description: "A savory & sweet casserole with layers of fried sweet plantains & flavorful ground beef filling. Since it is topped with cheese & stacked like a lasagna. It has been given the nickname “The Puerto Rican Lasagna”",
@@ -256,51 +216,6 @@ export const CURATED_RECIPES: Recipe[] = [
     },
     tags: ["Puerto Rican", "Filipino-Influence", "Longanisa", "Sausage", "Pastelillo", "Crispy", "Empanada", "Appetizer"],
     chefTip: "Keep the sausage filling relatively dry when cooking, as excess grease or sauce will steam inside the pastry and make it soggy rather than crispy. If your filling seems oily, drain it well before folding!"
-  },
-  {
-    id: "chicken-inasal-skewer",
-    title: "Chicken Inasal Skewer",
-    description: "A Filipino street food favorite made with tender chicken marinated in a blend of citrus, garlic, soy sauce, and traditional spices. Grilled over an open flame until lightly charred and juicy, these flavorful skewers are served with a tangy dipping sauce for the perfect balance of smoky, savory, and citrusy flavors.",
-    image: "https://i.imgur.com/wufF2zG.jpeg",
-    prepTime: 20,
-    cookTime: 15,
-    servings: 6,
-    difficulty: "Medium",
-    spiceFactor: "None",
-    flavor: "Citrus, Garlic & Smoky",
-    category: "Mains",
-    rating: 4.9,
-    ingredients: [
-      { name: "Chicken Thighs (boneless, cut into bite-sized pieces)", amount: "1.5 lbs", category: "Meat" },
-      { name: "Calamansi or Lime Juice", amount: "1/4 cup", category: "Produce" },
-      { name: "Garlic, finely minced", amount: "6 cloves", category: "Produce" },
-      { name: "Lemongrass (finely minced, white parts only)", amount: "2 stalks", category: "Produce" },
-      { name: "Ginger, finely grated", amount: "1 tbsp", category: "Produce" },
-      { name: "Soy Sauce", amount: "2 tbsp", category: "Pantry" },
-      { name: "Coconut Vinegar", amount: "1/4 cup", category: "Pantry" },
-      { name: "Brown Sugar", amount: "2 tbsp", category: "Pantry" },
-      { name: "Achiote Oil (for basting)", amount: "1/4 cup", category: "Pantry" },
-      { name: "Bamboo Skewers (soaked in water)", amount: "12 pieces", category: "Pantry" }
-    ],
-    instructions: [
-      "In a large bowl, whisk together the calamansi juice, coconut vinegar, soy sauce, minced garlic, minced lemongrass, grated ginger, brown sugar, salt, and pepper to create the marinade.",
-      "Add the chicken pieces to the marinade and mix well until completely coated. Cover and refrigerate for at least 3 hours (preferably overnight).",
-      "Soak bamboo skewers in water for at least 30 minutes before grilling to prevent them from burning.",
-      "Thread 4-5 marinated chicken pieces tightly onto each soaked bamboo skewer.",
-      "Preheat the grill or grill pan to medium-high heat and lightly brush the grate with vegetable oil.",
-      "In a small bowl, prepare the basting sauce by combining achiote oil with a spoonful of the marinade (or a pinch of sazon/salt).",
-      "Place the skewers on the grill. Grill for 6-8 minutes per side, turning occasionally, and basting generously with achiote oil every 2 minutes.",
-      "Grill until the chicken has developed beautiful charred edges and is cooked through to an internal temperature of 165°F (74°C).",
-      "Remove the skewers from the heat and let rest for 2-3 minutes. Serve hot with spiced vinegar dipping sauce and warm garlic rice!"
-    ],
-    nutritionalFacts: {
-      calories: 260,
-      protein: "24g",
-      carbs: "5g",
-      fat: "16g"
-    },
-    tags: ["Filipino", "Chicken", "Inasal", "Skewer", "Street Food", "Grill", "Smoky", "Lemongrass"],
-    chefTip: "The secret to authentic Chicken Inasal is the achiote oil basting! Basting frequently seals in the moisture and gives the chicken its signature vibrant orange color and subtle earthiness. Serve with a sawsawan dipping sauce made of soy sauce, calamansi, and vinegar!"
   },
   {
     id: "lechon-rice-bowl",
