@@ -260,45 +260,6 @@ export const CURATED_RECIPES: Recipe[] = [
     chefTip: "Do not rush the roasting process! The low and slow bake makes the pork shoulder incredibly juicy and melt-in-your-mouth tender, while the final high-heat blast is essential for achieving that ultra-crispy, perfectly bubbly golden 'cuero' skin crackling."
   },
   {
-    id: "adobo-tostones",
-    title: "Adobo Tostones",
-    description: "A Puerto Rican favorite made with green plantains that are twice fried until crispy on the outside and tender on the inside. Tossed in a savory garlic adobo seasoning and served with a flavorful dipping sauce, these golden bites deliver the perfect balance of crisp texture and bold island flavor.",
-    image: "https://i.imgur.com/J7ROTHV.jpeg",
-    prepTime: 10,
-    cookTime: 15,
-    servings: 4,
-    difficulty: "Easy",
-    spiceFactor: "None",
-    flavor: "Savory Garlic & Herb",
-    category: "Appetizers",
-    rating: 4.9,
-    ingredients: [
-      { name: "Green Plantains (peeled, sliced into 1-inch rounds)", amount: "3 large", category: "Produce" },
-      { name: "Vegetable Oil", amount: "2 cups (for frying)", category: "Pantry" },
-      { name: "Adobo Seasoning", amount: "1.5 tsp", category: "Pantry" },
-      { name: "Garlic Powder", amount: "1 tsp", category: "Pantry" },
-      { name: "Salt", amount: "To taste", category: "Pantry" },
-      { name: "Mayoketchup (Mayonnaise, Ketchup, & Garlic mixture)", amount: "For dipping", category: "Pantry" }
-    ],
-    instructions: [
-      "Prepare the Plantains: Peel the green plantains and slice them into thick 1-inch rounds.",
-      "First Fry: Heat vegetable oil in a skillet over medium heat (around 325°F / 160°C). Place the plantain pieces in the oil and fry for 3-4 minutes per side until soft and light golden, but not browned.",
-      "Drain and Cool: Remove with a slotted spoon and drain on paper towels for a minute.",
-      "Smash the Tostones: Place a warm plantain piece between two pieces of greased parchment paper or plastic wrap. Use a flat-bottomed cup, a small skillet, or a tostonera (plantain press) to press down firmly and flatten it into a disc about 1/4-inch thick.",
-      "Second Fry: Bring the oil temperature up to medium-high (around 375°F / 190°C). Carefully slide the smashed plantains back into the oil.",
-      "Fry until Crispy: Fry for 2-3 minutes per side until the edges are beautifully golden brown and super crispy.",
-      "Season and Serve: Remove from oil, drain on paper towels, and immediately sprinkle generously with adobo seasoning and garlic powder while still hot. Serve warm with mayoketchup dipping sauce!"
-    ],
-    nutritionalFacts: {
-      calories: 180,
-      protein: "2g",
-      carbs: "32g",
-      fat: "7g"
-    },
-    tags: ["Puerto Rican", "Tostones", "Plantain", "Appetizer", "Crispy", "Garlic", "Snack", "Deep-Fried"],
-    chefTip: "For the absolute crispiest tostones, quickly dip the smashed plantain discs in salted garlic water immediately before the second fry (be sure to pat them dry or expect some oil spatter). This adds moisture that steams on contact with hot oil, puffing up the outer crust to golden, bubbly perfection!"
-  },
-  {
     id: "tofu-sisig-rice-bowl",
     title: "Tofu Sisig Rice Bowl",
     description: "A delicious plant based twist on the Filipino classic. Crispy pan fried tofu is tossed with sautéed onions, peppers, and savory sisig seasonings, then served over steamed rice. Packed with bold, smoky, and tangy flavors, this hearty bowl delivers all the taste of traditional sisig in a satisfying vegetarian meal.",
@@ -464,5 +425,46 @@ export const CURATED_RECIPES: Recipe[] = [
     },
     tags: ["Puerto Rican", "Mofongo", "Plantains", "Garlic", "Chicharron", "Boricua", "Main Course"],
     chefTip: "Mash the plantains while they are still piping hot right out of the fryer! Warm plantains absorb the garlic oil and broth far better, creating that authentic, pliable texture."
+  },
+  {
+    id: "adobo-pernil-rice-bowl",
+    title: "Adobo Pernil Rice Bowl",
+    isNew: true,
+    description: "Puerto Rican-style pernil was seasoned with a flavorful blend of traditional Puerto Rican spices and Filipino adobo seasonings, creating the perfect savory, garlicky, and aromatic bite. 🤤\n\nWe paired it with steamed white rice and sweet plátanos maduros for the ultimate sweet & savory combination. 🍚🍌",
+    image: "https://i.imgur.com/xzSbWai.jpeg",
+    prepTime: 25,
+    cookTime: 180,
+    servings: 4,
+    difficulty: "Medium",
+    spiceFactor: "None",
+    flavor: "Savory, Garlicky & Sweet Maduros",
+    category: "Mains",
+    rating: 5.0,
+    ingredients: [
+      { name: "Pork Shoulder (Pernil)", amount: "3-4 lbs", category: "Meat" },
+      { name: "Filipino Soy Sauce & Cane Vinegar", amount: "1/4 cup each", category: "Pantry" },
+      { name: "Garlic Cloves (crushed)", amount: "10-12 cloves", category: "Produce" },
+      { name: "Puerto Rican Sazón & Adobo Seasoning", amount: "1 packet sazón, 1 tbsp adobo", category: "Pantry" },
+      { name: "Dried Bay Leaves & Whole Black Peppercorns", amount: "3 leaves, 1 tsp peppercorns", category: "Pantry" },
+      { name: "Dried Oregano & Olive Oil", amount: "1 tbsp oregano, 2 tbsp oil", category: "Pantry" },
+      { name: "Ripe Sweet Plantains (Plátanos Maduros)", amount: "2 large", category: "Produce" },
+      { name: "Steamed White Rice", amount: "4 cups (warm)", category: "Pantry" },
+      { name: "Cooking Oil (for frying plantains)", amount: "1/2 cup", category: "Pantry" }
+    ],
+    instructions: [
+      "Season and Marinate: Score the pork shoulder. Blend crushed garlic, soy sauce, cane vinegar, Puerto Rican adobo, sazón, oregano, bay leaves, peppercorns, and olive oil. Rub deeply into the pork and marinate for at least 4 hours (or overnight).",
+      "Slow Roast the Pernil: Preheat oven to 320°F (160°C). Roast the pork tightly covered with foil for 3 hours until meltingly tender and succulent.",
+      "Crisp the Cuero: Uncover the pork, raise the temperature to 420°F (215°C), and roast for 25-35 minutes until the skin crackles into golden, bubbly crispiness.",
+      "Fry Plátanos Maduros: Slice sweet ripe plantains diagonally. Fry in medium heat oil for 2-3 minutes per side until caramelized and tender.",
+      "Shred & Assemble: Shred the savory adobo pernil meat and chop pieces of the crispy skin. Scoop fluffy white rice into bowls, top with shredded pernil and crispy skin, and arrange sweet fried maduros alongside."
+    ],
+    nutritionalFacts: {
+      calories: 620,
+      protein: "42g",
+      carbs: "48g",
+      fat: "26g"
+    },
+    tags: ["Puerto Rican", "Filipino-Fusion", "Adobo", "Pernil", "Rice Bowl", "Maduros", "Pork", "Main Course"],
+    chefTip: "The magic is in the fusion marinade: the tang of Filipino cane vinegar and soy sauce balances the deep garlic-oregano aroma of traditional Puerto Rican pernil. Pairing every forkful of savory pork with caramelized sweet plátanos maduros creates the perfect bite!"
   }
 ];

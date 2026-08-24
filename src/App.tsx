@@ -747,7 +747,7 @@ export default function App() {
                         New Dishes Added to the Menu!
                       </h3>
                       <p className="text-brand-dark/70 text-xs mt-0.5 font-medium">
-                        Try our freshly added favorites: <strong className="text-brand-orange">Kare Kare</strong>, <strong className="text-brand-orange">Chicken Inasal</strong>, &amp; <strong className="text-brand-orange">Mofongo</strong>!
+                        Try our freshly added favorites: <strong className="text-brand-orange">Adobo Pernil Rice Bowl</strong>, <strong className="text-brand-orange">Chicken Inasal</strong>, <strong className="text-brand-orange">Kare Kare</strong>, &amp; <strong className="text-brand-orange">Mofongo</strong>!
                       </p>
                     </div>
                   </div>

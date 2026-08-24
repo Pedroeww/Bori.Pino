@@ -38,11 +38,6 @@ export default function Hero({
       image: "https://i.imgur.com/58fLlWr.jpeg",
       title: "Crispy Golden Lumpia",
       description: "Traditional paper-thin golden fried spring rolls served with sweet chili dip",
-    },
-    {
-      image: "https://i.imgur.com/J7ROTHV.jpeg",
-      title: "Adobo Tostones",
-      description: "Perfectly seasoned, twice-fried golden green plantain rounds served with garlic mayoketchup",
     }
   ];
 
