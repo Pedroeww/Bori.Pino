@@ -167,3 +167,36 @@
   scrollbar-width: none;
 }
 
+/* Kamayan Signage & Glow animations */
+@keyframes kamayanNeon {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), 0 0 35px rgba(16, 185, 129, 0.25), inset 0 0 15px rgba(200, 16, 46, 0.15);
+    border-color: rgba(245, 158, 11, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(200, 16, 46, 0.35), inset 0 0 25px rgba(245, 158, 11, 0.3);
+    border-color: rgba(16, 185, 129, 0.8);
+  }
+}
+.animate-kamayanNeon {
+  animation: kamayanNeon 3.5s ease-in-out infinite;
+}
+
+@keyframes leafSway {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(4deg) scale(1.04); }
+  75% { transform: rotate(-3deg) scale(0.98); }
+}
+.animate-leafSway {
+  animation: leafSway 4s ease-in-out infinite;
+}
+
+@keyframes shineSweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  50%, 100% { transform: translateX(250%) skewX(-20deg); }
+}
+.animate-shineSweep {
+  animation: shineSweep 4s ease-in-out infinite;
+}
+
+

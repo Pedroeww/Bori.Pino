@@ -58,7 +58,7 @@ export const CURATED_RECIPES: Recipe[] = [
     difficulty: "Hard",
     spiceFactor: "None",
     flavor: "Rich & Savory Garlicky",
-    category: "Mains",
+    category: "Appetizers",
     rating: 4.9,
     ingredients: [
       { name: "Yautia (Taro Root), peeled", amount: "2 lbs", category: "Produce" },
@@ -304,7 +304,6 @@ export const CURATED_RECIPES: Recipe[] = [
   {
     id: "kare-kare",
     title: "Kare Kare",
-    isNew: true,
     description: "A savory Filipino stew made with a mix of proteins and vegetables. Its carefully cooked in a rich cream peanut sauce.",
     image: "https://i.imgur.com/L7vdRGD.jpeg",
     prepTime: 25,
@@ -348,7 +347,6 @@ export const CURATED_RECIPES: Recipe[] = [
   {
     id: "chicken-inasal",
     title: "Chicken Inasal",
-    isNew: true,
     description: "A beloved Filipino grilled chicken dish known for its vibrant marinade and juicy, charred finish. The Filipino pinchos!",
     image: "https://i.imgur.com/kBKYLTz.jpeg",
     prepTime: 30,
@@ -390,7 +388,6 @@ export const CURATED_RECIPES: Recipe[] = [
   {
     id: "mofongo",
     title: "Mofongo",
-    isNew: true,
     description: "A well known puerto rican dish of deep-friend green plantains mashed together with garlic and shaped into a ball. Traditionally made with chicharron, friend pork rind.",
     image: "https://i.imgur.com/meCcw1Z.jpeg",
     prepTime: 20,
@@ -466,5 +463,91 @@ export const CURATED_RECIPES: Recipe[] = [
     },
     tags: ["Puerto Rican", "Filipino-Fusion", "Adobo", "Pernil", "Rice Bowl", "Maduros", "Pork", "Main Course"],
     chefTip: "The magic is in the fusion marinade: the tang of Filipino cane vinegar and soy sauce balances the deep garlic-oregano aroma of traditional Puerto Rican pernil. Pairing every forkful of savory pork with caramelized sweet plátanos maduros creates the perfect bite!"
+  },
+  {
+    id: "pancit",
+    title: "Pancit",
+    isNew: true,
+    description: "Pancit is a traditional Filipino dish made by stir-frying noodles with a savory mix of meats, seafood, and vegetables. Tossed with tender seasoned chicken, plump shrimp, crisp shredded cabbage, carrots, and an aromatic garlic-soy reduction, this iconic celebratory dish represents long life, good health, and joyful gatherings. 🥢✨",
+    image: "https://i.imgur.com/yt4K0gr.jpeg",
+    prepTime: 20,
+    cookTime: 25,
+    servings: 6,
+    difficulty: "Easy",
+    spiceFactor: "None",
+    flavor: "Savory, Umami & Citrusy Calamansi",
+    category: "Mains",
+    rating: 5.0,
+    ingredients: [
+      { name: "Pancit Bihon / Rice Vermicelli & Canton Noodles", amount: "8 oz", category: "Pantry" },
+      { name: "Chicken Breast (shredded or sliced)", amount: "1/2 lb", category: "Meat" },
+      { name: "Shrimp (peeled & deveined)", amount: "1/2 lb", category: "Meat" },
+      { name: "Garlic (minced)", amount: "5 cloves", category: "Produce" },
+      { name: "Yellow Onion (sliced)", amount: "1 medium", category: "Produce" },
+      { name: "Carrots (julienned)", amount: "1 large", category: "Produce" },
+      { name: "Green Cabbage (shredded)", amount: "2 cups", category: "Produce" },
+      { name: "Snow Peas or Snap Peas", amount: "1 cup", category: "Produce" },
+      { name: "Filipino Soy Sauce & Oyster Sauce", amount: "3 tbsp soy sauce, 2 tbsp oyster sauce", category: "Pantry" },
+      { name: "Chicken Broth", amount: "2 cups", category: "Pantry" },
+      { name: "Fresh Calamansi (or Lemon wedges for serving)", amount: "4-6 pieces", category: "Produce" },
+      { name: "Green Onions & Toasted Garlic (for garnish)", amount: "1/4 cup", category: "Produce" },
+      { name: "Cooking Oil & Black Pepper", amount: "2 tbsp oil, to taste", category: "Pantry" }
+    ],
+    instructions: [
+      "Soak the Noodles: Immerse the pancit bihon noodles in warm water for 8-10 minutes until pliable and soft. Drain thoroughly and set aside.",
+      "Sauté Aromatics & Proteins: In a large wok or deep skillet over medium-high heat, warm 2 tablespoons of oil. Sauté minced garlic and sliced onions until fragrant and lightly golden. Add the chicken and shrimp, cooking until opaque and lightly browned (about 4-5 minutes).",
+      "Stir-Fry Vegetables: Toss in the julienned carrots, snow peas, and shredded cabbage. Stir-fry briskly for 2-3 minutes until tender-crisp. Scoop out half of the cooked meats and vegetables and set them aside in a bowl to top the dish later.",
+      "Simmer the Savory Broth: Pour chicken broth, soy sauce, and oyster sauce into the wok with the remaining meats and vegetables. Season generously with freshly cracked black pepper. Bring to a rapid rolling boil.",
+      "Absorb & Toss: Submerge the drained noodles into the boiling savory broth. Using tongs, continuously toss and stir the noodles until they have completely soaked up the flavorful liquid, becoming glossy, tender, and evenly seasoned.",
+      "Garnish & Serve: Transfer the glistening noodles onto a large serving platter. Crown with the reserved tender chicken, shrimp, crisp vegetables, fresh green onions, and crispy toasted garlic. Serve immediately with plenty of fresh calamansi halves to squeeze generously over every bite!"
+    ],
+    nutritionalFacts: {
+      calories: 390,
+      protein: "24g",
+      carbs: "52g",
+      fat: "10g"
+    },
+    tags: ["Filipino", "Pancit", "Noodles", "Chicken", "Shrimp", "Bihon", "Stir-Fry", "Traditional", "Main Course"],
+    chefTip: "Never skip the fresh calamansi squeeze right before eating! The burst of tart citrus balances the rich umami soy reduction and brings out the sweetness of the tender vegetables and shrimp."
+  },
+  {
+    id: "mango-ice-candy",
+    title: "Mango Ice Candy",
+    isNew: true,
+    description: "Mango Ice Candy is a beloved Filipino frozen treat made with sweet, creamy mango goodness and served in a little plastic pouch. Simple, refreshing, and full of nostalgia. ❤️\n\nCrafted with ripe, fragrant Carabao mangoes blended with velvety condensed milk and fresh cream, it's the ultimate tropical summer refresher!",
+    image: "https://i.imgur.com/ogcMEmc.jpeg",
+    prepTime: 15,
+    cookTime: 0,
+    servings: 12,
+    difficulty: "Easy",
+    spiceFactor: "None",
+    flavor: "Sweet, Creamy & Tropical Mango",
+    category: "Desserts",
+    rating: 5.0,
+    ingredients: [
+      { name: "Ripe Sweet Mangoes (pureed)", amount: "3 large ripe mangoes", category: "Produce" },
+      { name: "Sweetened Condensed Milk", amount: "1 can (14 oz)", category: "Dairy" },
+      { name: "Evaporated Milk", amount: "1 can (12 oz)", category: "Dairy" },
+      { name: "Whole Milk or Coconut Milk", amount: "1 cup", category: "Dairy" },
+      { name: "Pure Vanilla Extract", amount: "1 tsp", category: "Pantry" },
+      { name: "Sea Salt", amount: "Pinch", category: "Pantry" },
+      { name: "Ice Candy Plastic Pouches / Sleeves", amount: "12-15 sleeves", category: "Pantry" }
+    ],
+    instructions: [
+      "Puree the Fresh Mangoes: Scoop the fragrant golden flesh from ripe mangoes and blend in a food processor or blender until completely smooth and velvety.",
+      "Blend Creamy Base: In a large pitcher, combine the pureed mango with sweetened condensed milk, evaporated milk, whole milk, vanilla extract, and a tiny pinch of salt. Whisk thoroughly until fully blended and creamy.",
+      "Fill the Ice Candy Sleeves: Place a small kitchen funnel into the opening of an ice candy plastic sleeve. Pour the creamy mango mixture until the sleeve is about 3/4 full, leaving enough plastic at the top to twist.",
+      "Twist & Knot: Twist the plastic neck tightly to remove air pockets and tie a secure knot at the top to seal the pouch.",
+      "Freeze to Perfection: Arrange the ice candy pouches flat on a tray in the freezer for at least 4 to 6 hours (or overnight) until completely frozen solid.",
+      "Serve & Enjoy: Bite or snip off the top corner tip of the pouch and push up from the bottom to enjoy this delightfully creamy, nostalgic tropical treat!"
+    ],
+    nutritionalFacts: {
+      calories: 140,
+      protein: "3g",
+      carbs: "22g",
+      fat: "4g"
+    },
+    tags: ["Filipino", "Mango", "Ice Candy", "Dessert", "Frozen Treat", "Tropical", "Sweet", "Nostalgic"],
+    chefTip: "Use super ripe and sweet yellow mangoes (like Philippine Carabao or Champagne mangoes) for the richest tropical aroma and vibrant golden sunshine color. Evaporated milk is the street-food secret that keeps the texture silky-creamy rather than icy!"
   }
 ];

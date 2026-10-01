@@ -3,6 +3,7 @@ import { ChefHat, BookOpen, Heart, Mail, Phone, Clock, MapPin, Check, Sun, Cloud
 import { motion, AnimatePresence } from "motion/react";
 import Hero from "./components/Hero";
 import RecipeCard from "./components/RecipeCard";
+import MobileKamayanSignage from "./components/MobileKamayanSignage";
 import { CURATED_RECIPES } from "./data/recipes";
 import { Recipe } from "./types";
 
@@ -112,6 +113,8 @@ export default function App() {
   const [globalMousePos, setGlobalMousePos] = useState({ x: -100, y: -100 });
   const [isMouseOnWindow, setIsMouseOnWindow] = useState(false);
   const [showNewMenuNotification, setShowNewMenuNotification] = useState(true);
+  // Mobile Kamayan starts toggled (collapsed) when visitor enters the website
+  const [kamayanExpanded, setKamayanExpanded] = useState(false);
 
   const recipes = CURATED_RECIPES;
 
@@ -419,6 +422,26 @@ export default function App() {
     }
   };
 
+  const scrollToKamayan = () => {
+    setKamayanExpanded(true);
+    const kamayanSec = document.getElementById("mobile-kamayan-services");
+    if (kamayanSec) {
+      kamayanSec.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleInquireKamayan = () => {
+    setFormData((prev) => ({
+      ...prev,
+      type: "Mobile Kamayan Services",
+      message: prev.message || "Hi BoriPino! I would like to inquire about booking a Mobile Kamayan feast for our upcoming celebration...",
+    }));
+    const contactSec = document.getElementById("app-contact-section");
+    if (contactSec) {
+      contactSec.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       {isIntroLoading ? (
@@ -600,6 +623,31 @@ export default function App() {
 
       {/* Global Banner Navigation bar */}
       <nav id="app-nav-bar" className="sticky top-0 z-40 bg-brand-cream/95 backdrop-blur-md border-b-2 border-brand-border">
+        {/* Prominent Signage Announcement Marquee / Ribbon Bar */}
+        <div 
+          id="top-kamayan-signage-banner"
+          onClick={scrollToKamayan}
+          className="bg-gradient-to-r from-emerald-800 via-amber-700 to-[#C8102E] text-white py-1.5 px-3 sm:px-6 cursor-pointer border-b border-amber-400/30 hover:brightness-110 transition-all select-none shadow-sm"
+        >
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-[11px] sm:text-xs">
+            <div className="flex items-center gap-2 overflow-hidden truncate">
+              <span className="bg-amber-400 text-brand-dark text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0 shadow-xs">
+                ✨ ON THE ROAD
+              </span>
+              <span className="font-extrabold truncate">
+                MOBILE KAMAYAN SERVICES OFFICIALLY AVAILABLE!
+              </span>
+              <span className="text-white/80 hidden md:inline font-medium">
+                Personalized in-home traditional communal dining feast — BoriPino comes to you!
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 shrink-0 text-amber-200 hover:text-white font-black text-[10px] sm:text-[11px] uppercase tracking-wider">
+              <span>View &amp; Book</span>
+              <span>&rarr;</span>
+            </div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-14 sm:h-20 items-center">
             {/* Logo */}
@@ -694,13 +742,14 @@ export default function App() {
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
         onScrollToExplore={scrollExploreIntoView}
+        onScrollToKamayan={scrollToKamayan}
         isShaking={isShaking}
         weatherMode={weatherMode}
       />
 
       {/* Main Main Stage Area */}
       <main className="relative z-10 flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
-        <div className="space-y-8 animate-fadeIn">
+        <div className="space-y-10 animate-fadeIn">
           {/* Popping Animated New Dishes Notification Banner */}
           <AnimatePresence>
             {showNewMenuNotification && (
@@ -747,7 +796,7 @@ export default function App() {
                         New Dishes Added to the Menu!
                       </h3>
                       <p className="text-brand-dark/70 text-xs mt-0.5 font-medium">
-                        Try our freshly added favorites: <strong className="text-brand-orange">Adobo Pernil Rice Bowl</strong>, <strong className="text-brand-orange">Chicken Inasal</strong>, <strong className="text-brand-orange">Kare Kare</strong>, &amp; <strong className="text-brand-orange">Mofongo</strong>!
+                        Try our freshly added favorites: <strong className="text-brand-orange">Mango Ice Candy</strong>, <strong className="text-brand-orange">Pancit</strong>, &amp; <strong className="text-brand-orange">Adobo Pernil Rice Bowl</strong>!
                       </p>
                     </div>
                   </div>
@@ -818,6 +867,14 @@ export default function App() {
               </p>
             </div>
           )}
+
+          {/* Prominent Mobile Kamayan Services Signage Showcase (Stationed Under The Menu) */}
+          <MobileKamayanSignage
+            weatherMode={weatherMode}
+            onInquireClick={handleInquireKamayan}
+            isExpanded={kamayanExpanded}
+            onToggle={() => setKamayanExpanded((prev) => !prev)}
+          />
         </div>
       </main>
 
@@ -1110,6 +1167,7 @@ export default function App() {
                           onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                           className="w-full px-4 py-2.5 rounded-xl border border-brand-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-orange/40 focus:border-brand-orange hover:border-brand-orange/60 transition-all duration-300 transform hover:scale-[1.01] focus:scale-[1.015] cursor-pointer"
                         >
+                          <option value="Mobile Kamayan Services">✨ Mobile Kamayan Services (At-Home Feast)</option>
                           <option value="Catering">Event Catering & Food Orders</option>
                           <option value="Recipe">Recipe Feedback & Culinary Suggestion</option>
                           <option value="Collaboration">Pop-up chef collaboration</option>

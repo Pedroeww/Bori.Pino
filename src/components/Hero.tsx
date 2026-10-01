@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Search, ChefHat, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChefHat, Sparkles, ChevronLeft, ChevronRight, Utensils } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import kamayanFeastImg from "../assets/images/mobile_kamayan_feast_1790874869525.jpg";
 
 interface HeroProps {
   searchQuery: string;
@@ -8,6 +9,7 @@ interface HeroProps {
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
   onScrollToExplore: () => void;
+  onScrollToKamayan?: () => void;
   isShaking?: boolean;
   weatherMode?: "caribbean-sun" | "philippine-breeze";
 }
@@ -18,12 +20,19 @@ export default function Hero({
   selectedCategory,
   setSelectedCategory,
   onScrollToExplore,
+  onScrollToKamayan,
   isShaking = false,
   weatherMode = "caribbean-sun",
 }: HeroProps) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const slides = [
+    {
+      image: kamayanFeastImg,
+      title: "Mobile Kamayan Services",
+      description: "Personalized communal feast at your home on fresh banana leaves — We come straight to you!",
+      isService: true
+    },
     {
       image: "https://i.imgur.com/eoQbQWc.jpeg",
       title: "Lechon Rice Bowl",
@@ -175,7 +184,19 @@ export default function Hero({
               className="mt-4 sm:mt-8"
             >
               <p className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-brand-dark/40 mb-2 sm:mb-3 font-mono">Popular Categories</p>
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center lg:justify-start">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center lg:justify-start items-center">
+                {onScrollToKamayan && (
+                  <motion.button
+                    id="hero-kamayan-jump-btn"
+                    onClick={onScrollToKamayan}
+                    whileHover={{ y: -3, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-2.5 py-1 sm:px-5 sm:py-2 rounded-full text-[9px] sm:text-sm font-black transition-all cursor-pointer border-2 bg-gradient-to-r from-emerald-600 via-amber-600 to-rose-600 text-white shadow-md shadow-amber-500/20 flex items-center gap-1 sm:gap-1.5"
+                  >
+                    <span>🌿 Mobile Kamayan</span>
+                    <span className="bg-white/20 text-[8px] sm:text-[9px] px-1.5 py-0.5 rounded-full uppercase">New</span>
+                  </motion.button>
+                )}
                 {categories.map((category) => (
                   <motion.button
                     key={category}
@@ -270,13 +291,24 @@ export default function Hero({
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl border border-brand-border flex items-start gap-2.5 sm:gap-3 z-20"
+                onClick={() => {
+                  if (slides[activeIdx].title.includes("Kamayan") && onScrollToKamayan) {
+                    onScrollToKamayan();
+                  }
+                }}
+                className={`absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl border border-brand-border flex items-start gap-2.5 sm:gap-3 z-20 ${
+                  slides[activeIdx].title.includes("Kamayan") ? "cursor-pointer hover:border-amber-500" : ""
+                }`}
               >
-                <span className="text-xl sm:text-2xl mt-0.5">🍽️</span>
+                <span className="text-xl sm:text-2xl mt-0.5">
+                  {slides[activeIdx].title.includes("Kamayan") ? "🌿" : "🍽️"}
+                </span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <p className="text-[8px] sm:text-[9px] text-brand-orange font-black font-mono uppercase tracking-widest">
-                      {activeIdx === 0 ? "CHEF'S FEATURE" : "DISH SHOWCASE"}
+                    <p className={`text-[8px] sm:text-[9px] font-black font-mono uppercase tracking-widest ${
+                      slides[activeIdx].title.includes("Kamayan") ? "text-emerald-700 font-extrabold" : "text-brand-orange"
+                    }`}>
+                      {slides[activeIdx].title.includes("Kamayan") ? "✨ NEW MOBILE SERVICE" : activeIdx === 1 ? "CHEF'S FEATURE" : "DISH SHOWCASE"}
                     </p>
                     <span className="text-[9px] font-mono font-bold text-brand-dark/50 bg-brand-border/40 px-1.5 py-0.5 rounded-md">
                       {activeIdx + 1} / {slides.length}
@@ -288,6 +320,11 @@ export default function Hero({
                   <p className="text-[10px] sm:text-xs text-brand-dark/80 mt-1 font-semibold leading-snug sm:leading-relaxed">
                     {slides[activeIdx].description}
                   </p>
+                  {slides[activeIdx].title.includes("Kamayan") && (
+                    <span className="inline-block mt-1 text-[9px] font-bold text-amber-700 underline uppercase tracking-wider">
+                      Tap to view service details &amp; book &rarr;
+                    </span>
+                  )}
                 </div>
               </motion.div>
             </motion.div>
